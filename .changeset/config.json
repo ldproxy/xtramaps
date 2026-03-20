@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.3/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [["@xtramaps/legend-symbols-maplibre", "@xtramaps/legend-symbols-maplibre-react", "@xtramaps/legend-symbols-maplibre-svelte", "@xtramaps/legend-symbols-maplibre-vue"]],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

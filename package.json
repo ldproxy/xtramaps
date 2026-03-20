@@ -1,0 +1,38 @@
+{
+  "name": "xtramaps",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldproxy/xtramaps.git"
+  },
+  "packageManager": "npm@11.11.1",
+  "workspaces": [
+    "packages/core/*",
+    "packages/react/*",
+    "packages/vue/*",
+    "packages/svelte/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "typecheck": "turbo typecheck",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo build && changeset publish",
+    "prepare": "lefthook install",
+    "upgrade": "ncu --workspaces --root --interactive --format group"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.6",
+    "@changesets/cli": "^2.30.0",
+    "lefthook": "2.1.4",
+    "npm-check-updates": "19.6.3",
+    "turbo": "^2.8.16",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.0",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}
