@@ -1,6 +1,6 @@
 {
   "name": "@xtramaps/legend-symbols-maplibre-vue",
-  "version": "0.0.0-next-20260320163732",
+  "version": "0.0.0-next-20260320165054",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@xtramaps/legend-symbols-maplibre": "0.0.0-next-20260320163732"
+    "@xtramaps/legend-symbols-maplibre": "0.0.0-next-20260320165054"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
