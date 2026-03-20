@@ -1,1 +1,5 @@
-export { greet } from "@xtramaps/legend-symbols-maplibre";
+export type { LegendSymbolWrappedProps } from "./createLegend";
+export { createLegend } from "./createLegend";
+export type { LegendSymbolReactProps } from "./LegendSymbol";
+export { LegendSymbolReact } from "./LegendSymbol";
+export { default as Raster } from "./Raster";

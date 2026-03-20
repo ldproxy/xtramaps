@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MapLibre Legend Symbols - React Example</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        padding: 2rem;
+        background: #f5f5f5;
+        color: #333;
+      }
+      h1 {
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+      }
+      .legend {
+        background: white;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        max-width: 360px;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.35rem 0;
+      }
+      .legend-icon {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ddd;
+        box-sizing: content-box;
+        flex-shrink: 0;
+      }
+      .legend-label {
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .loading {
+        color: #999;
+        font-style: italic;
+      }
+      .error {
+        color: #c33;
+      }
+    </style>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19",
+          "react/jsx-runtime": "https://esm.sh/react@19/jsx-runtime",
+          "react-dom/client": "https://esm.sh/react-dom@19/client",
+          "@xtramaps/legend-symbols-maplibre": "https://esm.sh/@xtramaps/legend-symbols-maplibre@next",
+          "@xtramaps/legend-symbols-maplibre-react": "https://esm.sh/@xtramaps/legend-symbols-maplibre-react@next",
+          "@maplibre/maplibre-gl-style-spec": "https://esm.sh/@maplibre/maplibre-gl-style-spec@22"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="module">
+      import React, { useState, useEffect } from "react";
+      import { createRoot } from "react-dom/client";
+      import { createLegend } from "@xtramaps/legend-symbols-maplibre-react";
+
+      const STYLE_URL =
+        "https://demo.ldproxy.net/daraa/styles/topographic?f=mbs";
+      const ZOOM = 14;
+
+      function App() {
+        const [style, setStyle] = useState(null);
+        const [LegendSymbolReact, setLegendSymbolReact] = useState(null);
+        const [error, setError] = useState(null);
+
+        useEffect(() => {
+          fetch(STYLE_URL)
+            .then((r) => r.json())
+            .then((style) => {
+              setStyle(style);
+              return createLegend(style, ZOOM);
+            })
+            .then((legend) => {
+              setLegendSymbolReact(() => legend);
+            })
+            .catch((e) => setError(e.message));
+        }, []);
+
+        if (error) {
+          return React.createElement("p", { className: "error" }, `Error: ${error}`);
+        }
+
+        if (!style || !LegendSymbolReact) {
+          return React.createElement("p", { className: "loading" }, "Loading style...");
+        }
+
+        const visibleLayers = style.layers.filter(
+          (l) => l.layout?.visibility !== "none" && l.type !== "background"
+        );
+
+        return React.createElement(
+          "div",
+          null,
+          React.createElement("h1", null, "Daraa Topographic Legend"),
+          React.createElement(
+            "div",
+            { className: "legend" },
+            visibleLayers.map((layer) =>
+              React.createElement(
+                "div",
+                { className: "legend-item", key: layer.id },
+                React.createElement(
+                  "div",
+                  { className: "legend-icon" },
+                  React.createElement(LegendSymbolReact, {
+                    layer: layer.id,
+                    style: { position: "absolute", top: 0, left: 0, width: "20px", height: "20px" },
+                  })
+                ),
+                React.createElement(
+                  "span",
+                  { className: "legend-label" },
+                  layer.id
+                )
+              )
+            )
+          )
+        );
+      }
+
+      createRoot(document.getElementById("root")).render(
+        React.createElement(App)
+      );
+    </script>
+  </body>
+</html>
