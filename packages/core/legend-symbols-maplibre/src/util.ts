@@ -13,6 +13,30 @@ import type {
   SpriteDimensions,
 } from "./types";
 
+export function camelCase(
+  obj: Record<string, unknown>,
+): Record<string, unknown> {
+  return Object.assign(
+    {},
+    ...Object.keys(obj).map((key) => {
+      const camelCased = key.includes("-")
+        ? key.replace(/-[a-z]/g, (g) => g[1].toUpperCase())
+        : key;
+      return { [camelCased]: obj[key] };
+    }),
+  );
+}
+
+export function CSSstring(string: string): Record<string, unknown> {
+  const cssJson = `{"${string
+    .replace(/;$/, "")
+    .replace(/;/g, '", "')
+    .replace(/: /g, '": "')}"}`;
+  const obj = JSON.parse(cssJson);
+
+  return camelCase(obj);
+}
+
 const PROP_MAP: [string, string?][] = [
   ["background"],
   ["circle"],

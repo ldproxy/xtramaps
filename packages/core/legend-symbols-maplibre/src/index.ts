@@ -1,4 +1,5 @@
 export { legendSymbol } from "./legend-symbol";
+export { rasterSymbol } from "./Raster";
 export type {
   CancellablePromise,
   ExprFunction,
@@ -16,7 +17,9 @@ export type {
   TransformRequestResult,
 } from "./types";
 export {
+  CSSstring,
   cache,
+  camelCase,
   exprHandler,
   loadImage,
   loadJson,

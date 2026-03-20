@@ -2,6 +2,10 @@
 
 React component for rendering legend symbols from MapLibre GL styles. Wraps [`@xtramaps/legend-symbols-maplibre`](https://github.com/ldproxy/xtramaps/tree/main/packages/core/legend-symbols-maplibre) and converts the virtual DOM tree into React elements.
 
+## Example
+
+[Live example](https://raw.githack.com/ldproxy/xtramaps/main/packages/react/legend-symbols-maplibre/examples/react-legend.html) — standalone HTML using the [Daraa topographic style](https://demo.ldproxy.net/daraa/styles/topographic?f=mbs).
+
 ## Install
 
 ```sh
@@ -44,7 +48,6 @@ Falls back to a raster placeholder icon when the layer type is not supported.
 
 - `createLegend(style, zoom?)` - Async factory that loads sprites and returns a component accepting `{ layer, zoom?, properties?, style? }`.
 - `LegendSymbolReact` - Lower-level component. Accepts `zoom`, `layer`, `sprite`, `properties`, and an optional `style` prop.
-- `Raster` - Fallback SVG placeholder component.
 
 ## License
 

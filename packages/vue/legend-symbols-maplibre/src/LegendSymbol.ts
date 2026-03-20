@@ -6,9 +6,9 @@ import {
   rasterSymbol,
   type SymbolTree,
 } from "@xtramaps/legend-symbols-maplibre";
-import { type CSSProperties, createElement, type ReactElement } from "react";
+import { type CSSProperties, h, type VNode } from "vue";
 
-function asReact(tree: SymbolTree, outerStyle?: CSSProperties): ReactElement {
+function asVue(tree: SymbolTree, outerStyle?: CSSProperties): VNode {
   let newStyle: CSSProperties = {};
   const { style, ...attributes } = tree.attributes;
 
@@ -22,19 +22,19 @@ function asReact(tree: SymbolTree, outerStyle?: CSSProperties): ReactElement {
     newStyle = { ...newStyle, ...outerStyle };
   }
 
-  return createElement(
+  return h(
     tree.element,
     { ...camelCase(attributes), style: newStyle },
-    tree.children ? tree.children.map((c: SymbolTree) => asReact(c)) : null,
+    tree.children ? tree.children.map((c: SymbolTree) => asVue(c)) : undefined,
   );
 }
 
-export interface LegendSymbolReactProps extends LegendSymbolProps {
+export interface LegendSymbolVueProps extends LegendSymbolProps {
   style?: CSSProperties;
 }
 
-export function LegendSymbolReact(props: LegendSymbolReactProps) {
+export function LegendSymbolVue(props: LegendSymbolVueProps) {
   const icon = legendSymbol(props);
 
-  return asReact(icon ?? rasterSymbol, props.style);
+  return asVue(icon ?? rasterSymbol, props.style);
 }
