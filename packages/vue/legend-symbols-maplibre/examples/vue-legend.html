@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MapLibre Legend Symbols - Vue Example</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        padding: 2rem;
+        background: #f5f5f5;
+        color: #333;
+      }
+      h1 {
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+      }
+      .legend {
+        background: white;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        max-width: 360px;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.35rem 0;
+      }
+      .legend-icon {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ddd;
+        box-sizing: content-box;
+        flex-shrink: 0;
+      }
+      .legend-label {
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .loading {
+        color: #999;
+        font-style: italic;
+      }
+      .error {
+        color: #c33;
+      }
+    </style>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://esm.sh/vue@3",
+          "@xtramaps/legend-symbols-maplibre": "https://esm.sh/@xtramaps/legend-symbols-maplibre@next",
+          "@xtramaps/legend-symbols-maplibre-vue": "https://esm.sh/@xtramaps/legend-symbols-maplibre-vue@next",
+          "@maplibre/maplibre-gl-style-spec": "https://esm.sh/@maplibre/maplibre-gl-style-spec@22"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="module">
+      import { createLegend } from "@xtramaps/legend-symbols-maplibre-vue";
+      import { createApp, defineComponent, h, onMounted, ref, shallowRef } from "vue";
+
+      const STYLE_URL =
+        "https://demo.ldproxy.net/daraa/styles/topographic?f=mbs";
+      const ZOOM = 14;
+
+      const App = defineComponent({
+        setup() {
+          const style = shallowRef(null);
+          const LegendSymbol = shallowRef(null);
+          const error = ref(null);
+
+          onMounted(async () => {
+            try {
+              const res = await fetch(STYLE_URL);
+              const s = await res.json();
+              style.value = s;
+              LegendSymbol.value = await createLegend(s, ZOOM);
+            } catch (e) {
+              error.value = e.message;
+            }
+          });
+
+          return () => {
+            if (error.value) {
+              return h("p", { class: "error" }, `Error: ${error.value}`);
+            }
+
+            if (!style.value || !LegendSymbol.value) {
+              return h("p", { class: "loading" }, "Loading style...");
+            }
+
+            const visibleLayers = style.value.layers.filter(
+              (l) => l.layout?.visibility !== "none" && l.type !== "background"
+            );
+
+            return h("div", null, [
+              h("h1", null, "Daraa Topographic Legend"),
+              h(
+                "div",
+                { class: "legend" },
+                visibleLayers.map((layer) =>
+                  h("div", { class: "legend-item", key: layer.id }, [
+                    h(
+                      "div",
+                      { class: "legend-icon" },
+                      h(LegendSymbol.value, {
+                        layer: layer.id,
+                        style: { position: "absolute", top: 0, left: 0, width: "20px", height: "20px" },
+                      })
+                    ),
+                    h("span", { class: "legend-label" }, layer.id),
+                  ])
+                )
+              ),
+            ]);
+          };
+        },
+      });
+
+      createApp(App).mount("#app");
+    </script>
+  </body>
+</html>
