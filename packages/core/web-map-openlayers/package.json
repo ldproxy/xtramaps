@@ -1,0 +1,44 @@
+{
+  "name": "@xtramaps/web-map-openlayers",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-openlayers#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldproxy/xtramaps.git",
+    "directory": "packages/core/web-map-openlayers"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ol-mapbox-style": "^13.4.2",
+    "proj4": "^2.21.0"
+  },
+  "peerDependencies": {
+    "ol": "10.8.0"
+  },
+  "devDependencies": {
+    "ol": "10.8.0"
+  }
+}

@@ -6,7 +6,8 @@
   "linked": [
     ["@xtramaps/legend-symbols-maplibre", "@xtramaps/legend-symbols-maplibre-react", "@xtramaps/legend-symbols-maplibre-svelte", "@xtramaps/legend-symbols-maplibre-vue"],
     ["@xtramaps/web-map-maplibre", "@xtramaps/web-map-maplibre-react"],
-    ["@xtramaps/layer-control-maplibre", "@xtramaps/layer-control-maplibre-react"]
+    ["@xtramaps/layer-control-maplibre", "@xtramaps/layer-control-maplibre-react"],
+    ["@xtramaps/web-map-openlayers", "@xtramaps/web-map-openlayers-react"]
   ],
   "access": "public",
   "baseBranch": "main",
