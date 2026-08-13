@@ -1,0 +1,42 @@
+{
+  "name": "@xtramaps/web-map-cesium",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-cesium#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldproxy/xtramaps.git",
+    "directory": "packages/core/web-map-cesium"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@cesium/engine": "^26.0.0",
+    "@cesium/widgets": "^16.0.0"
+  },
+  "devDependencies": {
+    "@cesium/engine": "^26.2.0",
+    "@cesium/widgets": "^16.1.1"
+  }
+}
