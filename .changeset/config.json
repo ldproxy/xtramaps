@@ -3,7 +3,11 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
-  "linked": [["@xtramaps/legend-symbols-maplibre", "@xtramaps/legend-symbols-maplibre-react", "@xtramaps/legend-symbols-maplibre-svelte", "@xtramaps/legend-symbols-maplibre-vue"]],
+  "linked": [
+    ["@xtramaps/legend-symbols-maplibre", "@xtramaps/legend-symbols-maplibre-react", "@xtramaps/legend-symbols-maplibre-svelte", "@xtramaps/legend-symbols-maplibre-vue"],
+    ["@xtramaps/web-map-maplibre", "@xtramaps/web-map-maplibre-react"],
+    ["@xtramaps/layer-control-maplibre", "@xtramaps/layer-control-maplibre-react"]
+  ],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",

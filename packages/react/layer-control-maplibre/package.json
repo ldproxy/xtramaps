@@ -1,12 +1,12 @@
 {
-  "name": "@xtramaps/legend-symbols-maplibre-react",
+  "name": "@xtramaps/layer-control-maplibre-react",
   "version": "1.0.0",
   "license": "MIT",
-  "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/react/legend-symbols-maplibre#readme",
+  "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/react/layer-control-maplibre#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/ldproxy/xtramaps.git",
-    "directory": "packages/react/legend-symbols-maplibre"
+    "directory": "packages/react/layer-control-maplibre"
   },
   "type": "module",
   "main": "./dist/index.cjs",
@@ -32,18 +32,24 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@xtramaps/legend-symbols-maplibre": "1.0.0"
+    "@xtramaps/layer-control-maplibre": "1.0.0",
+    "@xtramaps/legend-symbols-maplibre-react": "1.0.0",
+    "reactstrap": "^9.2.3"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "@vis.gl/react-maplibre": "^8.1.2",
+    "maplibre-gl": "^6.0.0"
   },
   "devDependencies": {
-    "@maplibre/maplibre-gl-style-spec": "^22.0.0",
     "@storybook/react-vite": "10.5.7",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.0",
+    "@vis.gl/react-maplibre": "^8.1.2",
+    "@xtramaps/web-map-maplibre-react": "1.0.0",
+    "maplibre-gl": "^6.3.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "storybook": "10.5.7"
