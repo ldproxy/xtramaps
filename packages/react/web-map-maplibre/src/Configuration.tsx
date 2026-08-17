@@ -6,7 +6,13 @@ import type {
   FeatureTitles,
   PopupMode,
 } from "@xtramaps/web-map-maplibre";
-import { addData, setStyleVector } from "@xtramaps/web-map-maplibre";
+import {
+  addData,
+  addPopup,
+  addPopupProps,
+  hoverLayers,
+  isDataLayer,
+} from "@xtramaps/web-map-maplibre";
 import type { GeoJSON } from "geojson";
 import * as maplibregl from "maplibre-gl";
 import { useEffect } from "react";
@@ -80,48 +86,90 @@ function Configuration({
     if (controls) {
       map.addControl(new maplibregl.NavigationControl({ showCompass }));
     }
+
+    // Everything below touches sources/layers, which maplibre-gl refuses ("Style is not done
+    // loading") if the map's own initial style hasn't finished loading yet - a race that isn't
+    // guaranteed to lose even on a freshly-mounted map (it did, reliably, right up until an
+    // unrelated change shifted the timing). Deferring via isStyleLoaded()/once("styledata")
+    // makes this deterministic instead of relying on incidental slowness elsewhere to win the race.
+    const runWhenStyleLoaded = (fn: () => void) => {
+      if (map.isStyleLoaded()) {
+        fn();
+      } else {
+        map.once("styledata", fn);
+      }
+    };
+
     if (data) {
-      const style = {
-        ...DEFAULT_STYLE,
-        ...defaultStyle,
-      };
+      // Java emits unset optional style fields (e.g. circleMinZoom) as the literal JS value
+      // `undefined`, not as an absent key - a plain `{...DEFAULT_STYLE, ...defaultStyle}` spread
+      // still copies those `undefined`s over DEFAULT_STYLE's real numbers, so every layer ends
+      // up with minzoom/maxzoom: undefined and maplibre-gl silently refuses to add it.
+      const style = { ...DEFAULT_STYLE };
+      (
+        Object.keys(defaultStyle ?? {}) as (keyof DefaultStyleOptions)[]
+      ).forEach((key) => {
+        const value = defaultStyle?.[key];
+        if (value !== undefined) {
+          (style as Record<keyof DefaultStyleOptions, unknown>)[key] = value;
+        }
+      });
 
       if (dataType === "geojson" && typeof data === "string") {
         fetch(data)
           .then((response) => response.json())
           .then((json: GeoJSON) => {
-            addData(
-              map,
-              styleUrl,
-              removeZoomLevelConstraints,
-              json,
-              dataType,
-              dataLayers,
-              style,
-              fitBounds,
-              popup,
-              featureTitles,
+            runWhenStyleLoaded(() =>
+              addData(
+                map,
+                styleUrl,
+                removeZoomLevelConstraints,
+                json,
+                dataType,
+                dataLayers,
+                style,
+                fitBounds,
+                popup,
+                featureTitles,
+              ),
             );
           });
       } else {
-        addData(
-          map,
-          styleUrl,
-          false,
-          data,
-          dataType,
-          dataLayers,
-          style,
-          fitBounds,
-          popup,
-          featureTitles,
+        runWhenStyleLoaded(() =>
+          addData(
+            map,
+            styleUrl,
+            false,
+            data,
+            dataType,
+            dataLayers,
+            style,
+            fitBounds,
+            popup,
+            featureTitles,
+          ),
         );
       }
-    } else if (styleUrl) {
-      setStyleVector(map, styleUrl, removeZoomLevelConstraints, popup);
+    } else if (styleUrl && popup) {
+      // The style itself is already applied via MapLibre's `mapStyle` prop (see MapLibre.tsx) -
+      // setting it imperatively here instead used to leave @vis.gl/react-maplibre's own source
+      // cache bookkeeping out of sync, so vector sources were registered but never actually
+      // started loading tiles. Only popup wiring for the style's own layers is left to do here.
+      runWhenStyleLoaded(() => {
+        if (popup === "HOVER_ID") {
+          addPopup(map, featureTitles, hoverLayers);
+        } else if (popup === "CLICK_PROPERTIES") {
+          const dataLayerIds = (map.getStyle()?.layers ?? [])
+            .filter((layer) => isDataLayer(layer) === true)
+            .map((layer) => layer.id);
+          addPopupProps(map, dataLayerIds);
+        }
+      });
     }
     if (custom) {
-      custom(map, maplibregl, MapboxDraw, { combine });
+      runWhenStyleLoaded(() =>
+        custom(map, maplibregl, MapboxDraw, { combine }),
+      );
     }
   }, [mapRef]);
 

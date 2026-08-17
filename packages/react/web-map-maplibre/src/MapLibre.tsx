@@ -6,7 +6,6 @@ import type {
   StyleSpecification,
 } from "@xtramaps/web-map-maplibre";
 import {
-  emptyStyle,
   polygonFromBounds,
   resolveWireframeBaseStyle,
 } from "@xtramaps/web-map-maplibre";
@@ -81,7 +80,19 @@ function MapLibre({
     let cancelled = false;
 
     if (styleUrl) {
-      setStyle(emptyStyle());
+      // Fetched and applied here (React state -> the `mapStyle` prop below) rather than
+      // imperatively via map.setStyle() from within Configuration: @vis.gl/react-maplibre's
+      // Map wrapper owns the source cache bookkeeping through its own managed `mapStyle`
+      // update path, and setting the style outside of that leaves the wrapper unaware of the
+      // change - vector sources get registered (map.getStyle() shows them fine) but never
+      // actually start loading tiles (isSourceLoaded stays false forever, no tile requests).
+      fetch(styleUrl)
+        .then((response) => response.json())
+        .then((fetchedStyle: StyleSpecification) => {
+          if (!cancelled) {
+            setStyle(fetchedStyle);
+          }
+        });
       return () => {
         cancelled = true;
       };
