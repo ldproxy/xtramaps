@@ -89,11 +89,13 @@ function Control({
   // initialize state from configuration when style is loaded
   useEffect(() => {
     const applyConfig = () => {
+      const style = map.getStyle();
+      if (!style) return;
       // map.getStyle() is typed against maplibre-gl's own (newer) nested copy of
       // @maplibre/maplibre-gl-style-spec; structurally identical to the one this
       // package depends on, so this cast is safe.
       parse(
-        map.getStyle() as unknown as Parameters<typeof parse>[0],
+        style as unknown as Parameters<typeof parse>[0],
         entries,
         preferStyle,
       ).then((config) => {
@@ -106,15 +108,15 @@ function Control({
       });
     };
 
-    // Control mounts as a child of the map, after the map's initial style (given via the
-    // managed `mapStyle` prop) has often already finished loading - a "style.load"-only
-    // listener attached here can simply miss an event that already fired, leaving cfg empty
-    // forever (no ControlPanel ever renders). Network conditions shift the timing either way,
-    // which is why this raced intermittently instead of failing outright. Checking
-    // isStyleLoaded() up front closes that gap; the listener stays for any later style swap.
-    if (map.isStyleLoaded()) {
-      applyConfig();
-    }
+    // Deliberately gating on map.getStyle() (truthy once the style spec itself is set), NOT
+    // map.isStyleLoaded() - that also requires every currently-visible tile across every
+    // source to have finished loading, which parse() has no need to wait for (it only reads
+    // the style's own sources/layers definitions). Gating on isStyleLoaded() here raced
+    // intermittently on datasets with many/slow-loading tiles (large vector styles): whether
+    // it fired at all in time depended on how long tiles happened to take, so it "randomly"
+    // worked or didn't depending on network conditions - not fixed by the isStyleLoaded()
+    // check that previously lived here, which was gating on the wrong signal entirely.
+    applyConfig();
     map.on("style.load", applyConfig);
     return () => {
       map.off("style.load", applyConfig);
