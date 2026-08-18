@@ -44,6 +44,7 @@
     "maplibre-gl": "^6.0.0"
   },
   "devDependencies": {
+    "@storybook/react-vite": "10.5.7",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/mapbox__mapbox-gl-draw": "^1.4.8",
@@ -51,6 +52,7 @@
     "@vis.gl/react-maplibre": "^8.1.2",
     "maplibre-gl": "^6.3.0",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "storybook": "10.5.7"
   }
 }

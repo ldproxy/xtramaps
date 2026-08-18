@@ -27,6 +27,10 @@ export default defineConfig({
         ],
         test: {
           name: 'storybook',
+          // Default (15s) is tight for stories that fetch live remote data (e.g. a GeoJSON
+          // feature collection) before a map/layer even exists to assert on - bumped so a
+          // slow-but-successful network round trip doesn't fail the test on its own.
+          testTimeout: 30000,
           browser: {
             enabled: true,
             headless: true,
