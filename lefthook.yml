@@ -3,3 +3,8 @@ pre-commit:
     lint:
       glob: "*.{ts,tsx,js,jsx,json}"
       run: npx biome check --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+
+commit-msg:
+  commands:
+    "lint commit message":
+      run: npx commitlint --edit {1}
