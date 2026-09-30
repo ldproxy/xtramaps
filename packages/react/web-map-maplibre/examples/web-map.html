@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Map MapLibre - React Example</title>
+    <link rel="stylesheet" href="../dist/index.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        padding: 2rem;
+        background: #f5f5f5;
+        color: #333;
+      }
+      h1 {
+        margin-bottom: 0.25rem;
+        font-size: 1.4rem;
+      }
+      h2 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      p.hint {
+        color: #666;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .card {
+        background: white;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      }
+      .map-container {
+        height: 420px;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .canvas-badge {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        background: rgba(29, 78, 137, 0.9);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .error {
+        color: #c33;
+      }
+    </style>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19",
+          "react/jsx-runtime": "https://esm.sh/react@19/jsx-runtime",
+          "react-dom/client": "https://esm.sh/react-dom@19/client",
+          "react-dom": "https://esm.sh/react-dom@19",
+          "@vis.gl/react-maplibre": "/node_modules/@vis.gl/react-maplibre/dist/index.js",
+          "maplibre-gl": "/node_modules/maplibre-gl/dist/maplibre-gl.mjs",
+          "@mapbox/mapbox-gl-draw": "https://esm.sh/@mapbox/mapbox-gl-draw@1.5.1",
+          "@turf/combine": "https://esm.sh/@turf/combine@7.4.0",
+          "@mapbox/geojson-extent": "https://esm.sh/@mapbox/geojson-extent@1.0.1",
+          "@xtramaps/web-map-maplibre": "../../../core/web-map-maplibre/dist/index.js",
+          "@xtramaps/web-map-maplibre-react": "../dist/index.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Web Map MapLibre</h1>
+    <p class="hint">
+      <code>@xtramaps/web-map-maplibre-react</code> - built on
+      <code>@vis.gl/react-maplibre</code> instead of the unmaintained
+      <code>react-maplibre-ui</code>.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Basemap from styleUrl</h2>
+        <div id="basemap" class="map-container"></div>
+      </div>
+      <div class="card">
+        <h2>GeoJSON data layer + hover popup + canvas overlay</h2>
+        <div id="data-map" class="map-container" style="position: relative"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import MapLibre, { CanvasOverlay } from "@xtramaps/web-map-maplibre-react";
+      import React from "react";
+      import { createRoot } from "react-dom/client";
+
+      const BASEMAP_STYLE_URL =
+        "https://demo.ldproxy.net/daraa/styles/topographic-with-basemap?f=mbs";
+
+      const sampleGeoJson = {
+        type: "FeatureCollection",
+        features: [
+          { type: "Feature", id: 1, geometry: { type: "Point", coordinates: [36.11, 32.62] }, properties: {} },
+          { type: "Feature", id: 2, geometry: { type: "Point", coordinates: [36.13, 32.63] }, properties: {} },
+          { type: "Feature", id: 3, geometry: { type: "Point", coordinates: [36.1, 32.6] }, properties: {} },
+        ],
+      };
+      const sampleGeoJsonUrl = URL.createObjectURL(
+        new Blob([JSON.stringify(sampleGeoJson)], { type: "application/json" }),
+      );
+      const featureTitles = { 1: "Feature One", 2: "Feature Two", 3: "Feature Three" };
+
+      function BasemapDemo() {
+        return React.createElement(MapLibre, {
+          styleUrl: BASEMAP_STYLE_URL,
+        });
+      }
+
+      // CanvasOverlay injects `map`/`maplibre` props into its child - the child must be
+      // a component that consumes them, not a raw DOM element (which would try to
+      // serialize the Map instance as an HTML attribute).
+      function CanvasBadge({ map }) {
+        const zoom = map ? map.getZoom().toFixed(1) : "?";
+        return React.createElement(
+          "div",
+          { className: "canvas-badge" },
+          `Canvas overlay is live (zoom ${zoom})`,
+        );
+      }
+
+      function DataMapDemo() {
+        return React.createElement(
+          MapLibre,
+          {
+            center: [36.11, 32.62],
+            zoom: 12,
+            dataUrl: sampleGeoJsonUrl,
+            popup: "HOVER_ID",
+            featureTitles,
+          },
+          React.createElement(CanvasOverlay, null, React.createElement(CanvasBadge)),
+        );
+      }
+
+      createRoot(document.getElementById("basemap")).render(React.createElement(BasemapDemo));
+      createRoot(document.getElementById("data-map")).render(React.createElement(DataMapDemo));
+    </script>
+  </body>
+</html>

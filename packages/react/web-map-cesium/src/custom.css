@@ -1,0 +1,16 @@
+.cesium-map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ported from ogcapi-html's Cesium/style.css - repositions the credit bar and
+   hides the duplicate "Cesium ion" link, leaving only the custom attribution. */
+.cesium-viewer-bottom {
+  left: 5px !important;
+  bottom: 0 !important;
+}
+
+.cesium-viewer-bottom a:nth-child(2) {
+  display: none !important;
+}

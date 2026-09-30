@@ -7,6 +7,9 @@
     "url": "https://github.com/ldproxy/xtramaps.git"
   },
   "packageManager": "npm@11.11.1",
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
+  },
   "workspaces": [
     "packages/core/*",
     "packages/react/*",
@@ -22,20 +25,33 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo build && changeset publish",
-    "prepare": "lefthook install",
-    "upgrade": "ncu --workspaces --root --interactive --format group"
+    "prepare": "lefthook install && playwright install chromium",
+    "upgrade": "ncu --workspaces --root --interactive --format group",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.6",
     "@changesets/cli": "^2.30.0",
+    "@storybook/addon-vitest": "10.5.7",
+    "@storybook/react-vite": "10.5.7",
+    "@vitest/browser": "4.1.10",
+    "@vitest/browser-playwright": "4.1.10",
+    "@vitest/coverage-v8": "4.1.10",
     "@commitlint/cli": "20.5.0",
     "@commitlint/config-conventional": "20.5.0",
     "lefthook": "2.1.4",
     "npm-check-updates": "19.6.3",
+    "playwright": "1.62.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "storybook": "10.5.7",
     "turbo": "^2.8.16",
     "typescript": "^5.9.3",
     "vite": "^8.0.0",
-    "vite-plugin-dts": "^4.5.4"
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "4.1.10"
   },
   "commitlint": {
     "extends": [

@@ -1,12 +1,12 @@
 {
-  "name": "@xtramaps/legend-symbols-maplibre-react",
+  "name": "@xtramaps/web-map-cesium-react",
   "version": "1.0.0",
   "license": "MIT",
-  "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/react/legend-symbols-maplibre#readme",
+  "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/react/web-map-cesium#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/ldproxy/xtramaps.git",
-    "directory": "packages/react/legend-symbols-maplibre"
+    "directory": "packages/react/web-map-cesium"
   },
   "type": "module",
   "main": "./dist/index.cjs",
@@ -22,7 +22,8 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
-    }
+    },
+    "./dist/index.css": "./dist/index.css"
   },
   "files": [
     "dist"
@@ -32,17 +33,20 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@xtramaps/legend-symbols-maplibre": "1.0.0"
+    "@xtramaps/web-map-cesium": "1.0.0"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "@cesium/engine": "^26.0.0",
+    "@cesium/widgets": "^16.0.0"
   },
   "devDependencies": {
-    "@maplibre/maplibre-gl-style-spec": "^22.0.0",
     "@storybook/react-vite": "10.5.7",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@cesium/engine": "^26.2.0",
+    "@cesium/widgets": "^16.1.1",
     "@vitejs/plugin-react": "^6.0.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

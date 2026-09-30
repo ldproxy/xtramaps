@@ -32,6 +32,9 @@ Each library has: `package.json`, `tsconfig.json`, `vite.config.ts`, `src/index.
 - `npm run lint` — lint and format check (Biome)
 - `npm run lint:fix` — auto-fix lint/format issues
 - `npm run typecheck` — type-check all packages
+- `npm run test` — run all Storybook stories as automated tests (Vitest browser mode, real Chromium via Playwright)
+- `npm run storybook` — start the Storybook dev server (root-level, covers all packages)
+- `npm run build-storybook` — build a static Storybook
 
 ## Key Conventions
 
@@ -43,6 +46,8 @@ Each library has: `package.json`, `tsconfig.json`, `vite.config.ts`, `src/index.
 - Core deps are listed in `dependencies` (not peers)
 - Biome handles formatting and linting — no Prettier or ESLint
 - Changesets for versioning — run `npx changeset` after changes
+- Storybook config lives at the repo root (`.storybook/`); stories live next to the code they cover (`packages/react/<lib>/src/*.stories.tsx`), not in a separate app. `@storybook/addon-vitest` runs every story (including its `play` function) as a Vitest test in real Chromium — no separate test framework needed
+- Playwright's Chromium binary installs automatically via the root `prepare` script (`npm install` → `playwright install chromium`)
 
 ## Adding a New Library
 
@@ -56,3 +61,4 @@ Each library has: `package.json`, `tsconfig.json`, `vite.config.ts`, `src/index.
 1. `npm run lint` passes
 2. `npm run build` succeeds
 3. `npm run typecheck` passes
+4. `npm run test` passes (if stories exist for the changed package)

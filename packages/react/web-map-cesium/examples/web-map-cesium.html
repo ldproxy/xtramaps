@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Map Cesium - React Example</title>
+    <link rel="stylesheet" href="../dist/index.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        padding: 2rem;
+        background: #f5f5f5;
+        color: #333;
+      }
+      h1 {
+        margin-bottom: 0.25rem;
+        font-size: 1.4rem;
+      }
+      p.hint {
+        color: #666;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+      }
+      .card {
+        background: white;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        max-width: 900px;
+      }
+      .map-container {
+        height: 560px;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+      }
+    </style>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19",
+          "react/jsx-runtime": "https://esm.sh/react@19/jsx-runtime",
+          "react-dom/client": "https://esm.sh/react-dom@19/client",
+          "react-dom": "https://esm.sh/react-dom@19",
+          "@cesium/engine": "https://esm.sh/@cesium/engine@26.2.0",
+          "@cesium/widgets": "https://esm.sh/@cesium/widgets@16.1.1?deps=@cesium/engine@26.2.0",
+          "@xtramaps/web-map-cesium": "../../../core/web-map-cesium/dist/index.js",
+          "@xtramaps/web-map-cesium-react": "../dist/index.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Web Map Cesium</h1>
+    <p class="hint">
+      <code>@xtramaps/web-map-cesium-react</code> - migrated from
+      <code>ogcapi-html</code> onto current <code>@cesium/engine</code>/<code
+        >@cesium/widgets</code
+      >
+      (26.2.0/16.1.1). Data: "3D Buildings in Cologne (LoD2)" from
+      <a href="https://demo.ldproxy.net/cologne_lod2">demo.ldproxy.net</a>.
+    </p>
+
+    <div class="card">
+      <h2>Buildings 3D Tileset</h2>
+      <div id="cesium-map" class="map-container"></div>
+    </div>
+
+    <script type="module">
+      import CesiumMap from "@xtramaps/web-map-cesium-react";
+      import React from "react";
+      import { createRoot } from "react-dom/client";
+
+      // Cesium needs its Workers/Assets/ThirdParty static files served separately
+      // and `window.CESIUM_BASE_URL` set before any Viewer is created - consuming
+      // apps are responsible for this themselves (see the package README). Here we
+      // point at the prebuilt static assets shipped by the unified `cesium` npm
+      // package on unpkg, version-matched to `@cesium/engine`/`@cesium/widgets` above.
+      window.CESIUM_BASE_URL = "https://unpkg.com/cesium@1.144.0/Build/Cesium/";
+
+      const BACKGROUND_URL =
+        "https://sgx.geodatenzentrum.de/wmts_basemapde/tile/1.0.0/de_basemapde_web_raster_farbe/default/GLOBAL_WEBMERCATOR/{TileMatrix}/{TileRow}/{TileCol}.png";
+      const ATTRIBUTION = "Geobasis NRW | &copy; basemap.de / BKG";
+      // No `?f=json` here: Cesium's `Resource` propagates the tileset URL's query
+      // parameters onto every derived subresource request (subtrees, tile
+      // content) - ldproxy's `.subtree` endpoint 400s if `f=json` rides along.
+      // The bare URL still negotiates to JSON by default (via `Accept`).
+      const TILESET_URL =
+        "https://demo.ldproxy.net/cologne_lod2/collections/building/3dtiles";
+      const STYLE_URL =
+        "https://demo.ldproxy.net/cologne_lod2/collections/building/styles/surface-type?f=3dtiles";
+
+      createRoot(document.getElementById("cesium-map")).render(
+        React.createElement(CesiumMap, {
+          backgroundUrl: BACKGROUND_URL,
+          attribution: ATTRIBUTION,
+          accessToken: null,
+          tileset: { url: TILESET_URL },
+          additionalStyleUrl: STYLE_URL,
+        }),
+      );
+    </script>
+  </body>
+</html>

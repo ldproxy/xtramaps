@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "prConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "description": "Patch bumps are low-risk and covered by CI (lint/build/typecheck/test) - merge automatically once checks pass. Requires 'build' to be a required status check in this repo's branch protection.",
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Minor/major bumps (incl. maplibre-gl, @maplibre/*, @vis.gl/react-maplibre) need a manual browser check before merging - CI alone doesn't yet cover enough of the map-rendering surface to trust these unattended. Revisit once test coverage for web-map-maplibre(-react) is broader.",
+      "matchUpdateTypes": ["minor", "major"],
+      "automerge": false
+    }
+  ]
+}
