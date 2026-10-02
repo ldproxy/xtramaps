@@ -57,6 +57,7 @@ export const getRadioGroups = (
 const getRadioGroupLayers = (
   groups: EntryLike[],
   selectedOnly?: boolean,
+  hidden: Set<string> = new Set(),
 ): Record<string, string | string[] | null> => {
   const radioGroups: Record<string, string | string[] | null> = {};
 
@@ -69,8 +70,10 @@ const getRadioGroupLayers = (
       const entries = g.entries as EntryLike[] | undefined;
       const id = g.id as string;
       if (selectedOnly) {
-        radioGroups[id] =
-          entries && entries.length > 0 ? getId(entries[0]) : null;
+        // first entry that is not hidden in the style, falling back to the first entry
+        const selected =
+          entries?.find((e) => !hidden.has(getId(e))) ?? entries?.[0];
+        radioGroups[id] = selected ? getId(selected) : null;
       } else {
         radioGroups[id] = entries ? entries.map((e) => getId(e)) : [];
       }
@@ -182,6 +185,88 @@ export function getChildDeps(
 
   return tmp ? deps : deps.clean;
 }
+
+/** Ids of all style layers with `layout.visibility: "none"`. */
+const getHiddenLayerIds = (style: StyleWithSpriteLoaded | null): Set<string> =>
+  new Set(
+    (style?.layers ?? [])
+      .filter(
+        (layer) =>
+          (layer as { layout?: { visibility?: string } }).layout?.visibility ===
+          "none",
+      )
+      .map((layer) => layer.id),
+  );
+
+/**
+ * Layers are selected unless hidden in the style. A merge-group is shown as a single entry,
+ * so it is selected as soon as one of its layers is visible; groups (whose entries are
+ * listed individually) are selected only if all of their entries are selected.
+ */
+const getSelectedIds = (
+  entries: EntryLike[],
+  hidden: Set<string>,
+): string[] => {
+  const selected: string[] = [];
+
+  const visit = (entry: EntryLike): boolean => {
+    if (typeof entry === "string") {
+      return true;
+    }
+    const id = entry.id as string;
+    if (entry.type === "layer") {
+      const isSelected = !hidden.has(id);
+      if (isSelected) selected.push(id);
+      return isSelected;
+    }
+    const states = ((entry.entries as EntryLike[] | undefined) ?? []).map(
+      visit,
+    );
+    const isSelected =
+      entry.type === "merge-group" && states.length > 0
+        ? states.some(Boolean)
+        : states.every(Boolean);
+    if (isSelected) selected.push(id);
+    return isSelected;
+  };
+
+  entries.forEach(visit);
+
+  return selected;
+};
+
+/** Ids of all groups and radio-groups, except those configured with `opened: false`. */
+const getOpenedIds = (entries: EntryLike[]): string[] => {
+  const ids: string[] = [];
+
+  entries.forEach((e) => {
+    if (typeof e === "string") {
+      return;
+    }
+    if (
+      (e.type === "group" || e.type === "radio-group") &&
+      e.opened !== false
+    ) {
+      ids.push(e.id as string);
+    }
+    if (e.entries) {
+      ids.push(...getOpenedIds(e.entries as EntryLike[]));
+    }
+  });
+
+  return ids;
+};
+
+const getMergeGroupLayerIds = (entries: EntryLike[]): string[] =>
+  entries.flatMap((e) => {
+    if (typeof e === "string" || !e.entries) {
+      return [];
+    }
+    const children = e.entries as EntryLike[];
+    return e.type === "merge-group"
+      ? children.map(getId)
+      : getMergeGroupLayerIds(children);
+  });
 
 const getLayers = (
   style: StyleWithSpriteLoaded | null,
@@ -319,6 +404,7 @@ export const parse = async (
 
   const { opened, onlyLegend, entries = entriesCfg } = styleMetadataCfg;
   const layers = getLayers(style);
+  const hidden = getHiddenLayerIds(style);
   const hydrated = hydrate(entries as EntryLike[], layers);
 
   const config: LayerControlConfig = {
@@ -328,10 +414,14 @@ export const parse = async (
     allIds: getIds(hydrated as EntryLike[]),
     layerIds: getIds(hydrated as EntryLike[], ["layer"]),
     groupIds: getIds(hydrated as EntryLike[], ["group", "radio-group"]),
-    radioIds: getRadioGroupLayers(hydrated as EntryLike[], true) as Record<
-      string,
-      string | null
-    >,
+    selectedIds: getSelectedIds(hydrated as EntryLike[], hidden),
+    openedIds: getOpenedIds(hydrated as EntryLike[]),
+    mergeGroupLayerIds: getMergeGroupLayerIds(hydrated as EntryLike[]),
+    radioIds: getRadioGroupLayers(
+      hydrated as EntryLike[],
+      true,
+      hidden,
+    ) as Record<string, string | null>,
     radioGroups: getRadioGroupLayers(hydrated as EntryLike[]) as Record<
       string,
       string[]
@@ -355,6 +445,9 @@ export const initialCfg: LayerControlConfig = {
   allIds: [],
   layerIds: [],
   groupIds: [],
+  selectedIds: [],
+  openedIds: [],
+  mergeGroupLayerIds: [],
   radioIds: {},
   radioGroups: {},
   deps: {},

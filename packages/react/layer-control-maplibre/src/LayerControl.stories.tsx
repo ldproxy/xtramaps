@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import MapLibre from "@xtramaps/web-map-maplibre-react";
 import "@xtramaps/web-map-maplibre-react/dist/index.css";
+// LayerControl is built on reactstrap and expects the host app to bring Bootstrap CSS
+// (as ogcapi-html does) - without it <Collapse> never actually hides anything.
+import "bootstrap/dist/css/bootstrap.min.css";
 import type { Map as MaplibreMap } from "maplibre-gl";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 import LayerControl from "./LayerControl";
@@ -246,6 +249,212 @@ export const StyleMetadata: Story = {
             capturedMap?.getLayoutProperty("agriculturesrf", "visibility"),
           ).toBe("none"),
         );
+      },
+    );
+  },
+};
+
+// Layers hidden via `visibility: "none"` in the style itself - LayerControl must take
+// them over as its initial selection instead of forcing every layer visible.
+const HIDDEN_IN_STYLE = [
+  "militarysrf",
+  "hydrographycrv",
+  "utilityinfrastructurepnt",
+  // only one of the two layers of the "Railway" merge-group
+  "transportationgroundcrv.0b",
+];
+
+const initialStateEntries = entries.map((entry) =>
+  typeof entry !== "string" && entry.type === "group"
+    ? {
+        ...entry,
+        entries: entry.entries.map((child) =>
+          typeof child !== "string" && child.id === "Hydro"
+            ? { ...child, opened: false }
+            : child,
+        ),
+      }
+    : entry,
+);
+
+const loadStyleWithHiddenLayers = async () => {
+  const style = await (await fetch(STYLE_URL)).json();
+  for (const layer of style.layers) {
+    if (HIDDEN_IN_STYLE.includes(layer.id)) {
+      layer.layout = { ...layer.layout, visibility: "none" };
+    }
+  }
+  const styleUrl = URL.createObjectURL(
+    new Blob([JSON.stringify(style)], { type: "application/json" }),
+  );
+  return { styleUrl };
+};
+
+const renderInitialState: Story["render"] = (_args, { loaded }) => (
+  <MapLibre
+    styleUrl={loaded.styleUrl as string}
+    center={[36.1, 32.62]}
+    zoom={13}
+    custom={(map) => {
+      capturedMap = map;
+    }}
+  >
+    <LayerControl entries={initialStateEntries} preferStyle={false} opened />
+  </MapLibre>
+);
+
+// Hydro starts collapsed (opened: false); the layers in HIDDEN_IN_STYLE start deselected.
+// This story only asserts the initial state - no clicks - so what you see in Storybook
+// is exactly the state after loading. Interactions live in InitialStateInteractions.
+export const InitialState: Story = {
+  loaders: [loadStyleWithHiddenLayers],
+  render: renderInitialState,
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step(
+      "layers hidden in the style start unchecked and stay hidden",
+      async () => {
+        const checkbox = await findInputByText(canvas, "militarysrf");
+        await expect(checkbox).not.toBeChecked();
+        await waitFor(() => expect(capturedMap).not.toBeNull());
+        await expect(
+          capturedMap?.getLayoutProperty("militarysrf", "visibility"),
+        ).toBe("none");
+      },
+    );
+
+    await step(
+      "a group with a hidden layer starts unchecked, its visible layers checked",
+      async () => {
+        await expect(
+          await findInputByText(canvas, "hydrographycrv"),
+        ).not.toBeChecked();
+        await expect(
+          await findInputByText(canvas, "hydrographysrf"),
+        ).toBeChecked();
+        await expect(
+          await findInputByText(canvas, "Hydrography"),
+        ).not.toBeChecked();
+        await expect(
+          await findInputByText(canvas, "Overview"),
+        ).not.toBeChecked();
+        await expect(await findInputByText(canvas, "Railway")).toBeChecked();
+      },
+    );
+
+    await step(
+      "a partially hidden merge-group starts checked, its hidden layer stays hidden",
+      async () => {
+        const railway = await findInputByText(canvas, "Railway");
+        await expect(railway).toBeChecked();
+        await expect(
+          capturedMap?.getLayoutProperty(
+            "transportationgroundcrv.0a",
+            "visibility",
+          ),
+        ).not.toBe("none");
+        await expect(
+          capturedMap?.getLayoutProperty(
+            "transportationgroundcrv.0b",
+            "visibility",
+          ),
+        ).toBe("none");
+      },
+    );
+
+    await step(
+      "a radio-group selects its first entry that is not hidden in the style",
+      async () => {
+        await expect(
+          await findInputByText(canvas, "utilityinfrastructurepnt"),
+        ).not.toBeChecked();
+        await expect(
+          await findInputByText(canvas, "agriculturesrf"),
+        ).toBeChecked();
+        await waitFor(() =>
+          expect(
+            capturedMap?.getLayoutProperty("agriculturesrf", "visibility"),
+          ).not.toBe("none"),
+        );
+      },
+    );
+
+    await step(
+      "a group with opened: false starts collapsed, others expanded",
+      async () => {
+        await waitFor(() =>
+          expect(canvas.getByText("hydrographysrf")).not.toBeVisible(),
+        );
+        await expect(canvas.getByText("Railway")).toBeVisible();
+      },
+    );
+  },
+};
+
+export const InitialStateInteractions: Story = {
+  loaders: [loadStyleWithHiddenLayers],
+  render: renderInitialState,
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await canvas.findByText("militarysrf", {}, { timeout: 15000 });
+
+    await step(
+      "a group gets checked once all of its entries are, even with a partially hidden merge-group",
+      async () => {
+        const toggleHydro = async () => {
+          const header = (await canvas.findByText("Hydrography")).closest(
+            ".row",
+          );
+          const button = header?.querySelector("button");
+          await expect(button).not.toBeNull();
+          await userEvent.click(button as HTMLButtonElement);
+        };
+
+        await toggleHydro();
+        await userEvent.click(await findInputByText(canvas, "hydrographycrv"));
+
+        await expect(
+          await findInputByText(canvas, "Hydrography"),
+        ).toBeChecked();
+        // "Railway" is checked although one of its layers is still hidden
+        await expect(await findInputByText(canvas, "Overview")).toBeChecked();
+        await expect(
+          capturedMap?.getLayoutProperty(
+            "transportationgroundcrv.0b",
+            "visibility",
+          ),
+        ).toBe("none");
+      },
+    );
+
+    await step(
+      "switching a partially hidden merge-group off and on shows all its layers",
+      async () => {
+        const railway = await findInputByText(canvas, "Railway");
+        await userEvent.click(railway);
+        await expect(railway).not.toBeChecked();
+        await waitFor(() =>
+          expect(
+            capturedMap?.getLayoutProperty(
+              "transportationgroundcrv.0a",
+              "visibility",
+            ),
+          ).toBe("none"),
+        );
+
+        await userEvent.click(railway);
+        await expect(railway).toBeChecked();
+        for (const layerId of [
+          "transportationgroundcrv.0a",
+          "transportationgroundcrv.0b",
+        ]) {
+          await waitFor(() =>
+            expect(
+              capturedMap?.getLayoutProperty(layerId, "visibility"),
+            ).not.toBe("none"),
+          );
+        }
       },
     );
   },
