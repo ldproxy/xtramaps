@@ -90,13 +90,15 @@ function Configuration({
     // Everything below touches sources/layers, which maplibre-gl refuses ("Style is not done
     // loading") if the map's own initial style hasn't finished loading yet - a race that isn't
     // guaranteed to lose even on a freshly-mounted map (it did, reliably, right up until an
-    // unrelated change shifted the timing). Deferring via isStyleLoaded()/once("styledata")
-    // makes this deterministic instead of relying on incidental slowness elsewhere to win the race.
+    // unrelated change shifted the timing). Deferring until the style is loaded makes this
+    // deterministic instead of relying on incidental slowness elsewhere to win the race.
+    // Not isStyleLoaded()/"styledata": that also waits for all visible tiles, and "styledata"
+    // may never fire again, so data was intermittently never added.
     const runWhenStyleLoaded = (fn: () => void) => {
-      if (map.isStyleLoaded()) {
+      if (map.getStyle()) {
         fn();
       } else {
-        map.once("styledata", fn);
+        map.once("style.load", fn);
       }
     };
 
