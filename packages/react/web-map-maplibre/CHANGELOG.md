@@ -1,5 +1,11 @@
 # @xtramaps/web-map-maplibre-react
 
+## 1.1.1
+
+### Patch Changes
+
+- de50093: Fix data (e.g. GeoJSON from `data` URL) intermittently not being added and the map not fitting its bounds: adding data waited for `map.isStyleLoaded()`/`styledata`, but `isStyleLoaded()` also waits for all visible tiles, and `styledata` does not fire again once the style is loaded. It now waits for the style itself (`map.getStyle()`/`style.load`).
+
 ## 1.1.0
 
 ### Minor Changes
