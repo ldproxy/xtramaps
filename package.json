@@ -32,7 +32,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.6",
+    "@biomejs/biome": "2.5.15",
     "@changesets/cli": "^2.30.0",
     "@storybook/addon-vitest": "10.5.7",
     "@storybook/react-vite": "10.5.7",
