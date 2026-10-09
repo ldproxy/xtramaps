@@ -43,7 +43,7 @@
     "@commitlint/config-conventional": "20.5.3",
     "lefthook": "2.1.4",
     "npm-check-updates": "19.6.6",
-    "playwright": "1.62.1",
+    "playwright": "1.64.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "storybook": "10.5.7",
