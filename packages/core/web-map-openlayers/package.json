@@ -36,9 +36,9 @@
     "proj4": "^2.21.0"
   },
   "peerDependencies": {
-    "ol": "10.8.0"
+    "ol": "10.11.0"
   },
   "devDependencies": {
-    "ol": "10.8.0"
+    "ol": "10.11.0"
   }
 }
