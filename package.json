@@ -36,9 +36,9 @@
     "@changesets/cli": "^2.30.0",
     "@storybook/addon-vitest": "10.5.7",
     "@storybook/react-vite": "10.5.7",
-    "@vitest/browser": "4.1.10",
-    "@vitest/browser-playwright": "4.1.10",
-    "@vitest/coverage-v8": "4.1.10",
+    "@vitest/browser": "4.1.11",
+    "@vitest/browser-playwright": "4.1.11",
+    "@vitest/coverage-v8": "4.1.11",
     "@commitlint/cli": "20.5.3",
     "@commitlint/config-conventional": "20.5.3",
     "lefthook": "2.1.4",
@@ -51,7 +51,7 @@
     "typescript": "^5.9.3",
     "vite": "^8.0.0",
     "vite-plugin-dts": "^4.5.4",
-    "vitest": "4.1.10"
+    "vitest": "4.1.11"
   },
   "commitlint": {
     "extends": [
