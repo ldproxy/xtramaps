@@ -29,9 +29,10 @@ function Layer({
   isSelected,
   onSelect,
 }: LayerProps) {
-  const hasFill = icons.some(
-    (icon) => style?.layers?.[icon.index as number]?.type === "fill",
-  );
+  const hasFill = icons.some((icon) => {
+    const layer = style?.layers?.[icon.index as number];
+    return layer?.type === "fill" && layer.paint?.["fill-opacity"] !== 0;
+  });
   const hasRaster = icons.some(
     (icon) => style?.layers?.[icon.index as number]?.type === "raster",
   );
