@@ -33,6 +33,6 @@
   },
   "dependencies": {
     "@xtramaps/legend-symbols-maplibre": "1.0.0",
-    "@maplibre/maplibre-gl-style-spec": "^22.0.0"
+    "@maplibre/maplibre-gl-style-spec": "^22.0.1"
   }
 }
