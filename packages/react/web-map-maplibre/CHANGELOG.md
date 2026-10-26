@@ -1,5 +1,17 @@
 # @xtramaps/web-map-maplibre-react
 
+## 1.2.0
+
+### Minor Changes
+
+- 06deb08: Map libraries (maplibre-gl, @vis.gl/react-maplibre, ol, rlayers, @cesium/engine, @cesium/widgets) are now regular dependencies instead of peer dependencies, so consumers no longer need to install them.
+
+### Patch Changes
+
+- Updated dependencies [06deb08]
+- Updated dependencies [73f46e7]
+  - @xtramaps/web-map-maplibre@1.2.0
+
 ## 1.1.1
 
 ### Patch Changes
