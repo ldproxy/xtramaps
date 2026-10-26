@@ -61,10 +61,16 @@ function Control({
         }
       });
 
+      // a parent is selected once all of its entries are - layers inside merge-groups are
+      // not entries of their own (a merge-group may be selected with some of them hidden)
       cfg.depsParent[id].forEach((parent) => {
         if (
           !newSelected.includes(parent) &&
-          cfg.depsChild[parent].every((child) => newSelected.includes(child))
+          cfg.depsChild[parent].every(
+            (child) =>
+              cfg.mergeGroupLayerIds.includes(child) ||
+              newSelected.includes(child),
+          )
         ) {
           newSelected.push(parent);
         }
@@ -103,8 +109,8 @@ function Control({
         if (config.opened === true) setIsVisible(true);
         if (config.onlyLegend === true) setIsControlable(false);
         setSelectedRadioGroups(config.radioIds);
-        setSelected(config.allIds);
-        setOpen(config.groupIds);
+        setSelected(config.selectedIds);
+        setOpen(config.openedIds);
       });
     };
 
