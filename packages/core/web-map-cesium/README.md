@@ -10,7 +10,7 @@ Unlike the MapLibre/OpenLayers migrations, the original `Cesium` component was n
 npm install @xtramaps/web-map-cesium
 ```
 
-Requires `@cesium/engine` (`^26.0.0`) and `@cesium/widgets` (`^16.0.0`) as peer dependencies.
+Brings `@cesium/engine` (`^26`) and `@cesium/widgets` (`^16`) as dependencies.
 
 ## Usage
 
@@ -37,6 +37,23 @@ await loadTileset(
 
 - `createViewer()` - builds a Cesium `Viewer` with the background imagery layer and, optionally, a terrain provider (Ion asset `1` / Cesium World Terrain by default if no `terrainProvider.url` is given)
 - `loadTileset()` - loads a 3D Tileset, applies the optional vertical-shift correction (`terrainHeightDifference`) and an optional external 3D Tiles style, then flies the camera to it. Unlike the original (fire-and-forget, no error handling), failures are caught and logged instead of producing an unhandled rejection
+
+### Vite plugin
+
+Cesium loads its workers, assets and widget styles at runtime from `CESIUM_BASE_URL`, so a bundler can't discover them. `cesiumAssets()` serves them in dev and emits them on build under `<assetsDir>/<cesiumAssetsPath>`:
+
+```js
+// vite.config.js
+import { cesiumAssets, cesiumAssetsPath } from "@xtramaps/web-map-cesium/vite";
+
+export default defineConfig({
+  plugins: [cesiumAssets()],
+  define: { "process.env.CESIUM_PATH": JSON.stringify(cesiumAssetsPath) },
+});
+
+// at runtime, before creating the viewer
+globalThis.CESIUM_BASE_URL = `${assetsUrl}/${process.env.CESIUM_PATH}`;
+```
 
 ## License
 

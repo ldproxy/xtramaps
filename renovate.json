@@ -25,6 +25,16 @@
       "semanticCommitType": "fix"
     },
     {
+      "description": "rlayers pins its ol peer exactly, and Renovate doesn't read peer dependencies. Updating both together means the PR stays red (npm refuses the install) while ol is ahead of rlayers, and turns green once an rlayers release catches up.",
+      "groupName": "openlayers",
+      "matchPackageNames": ["ol", "rlayers"]
+    },
+    {
+      "description": "@cesium/widgets depends on @cesium/engine; if the two drift apart, npm installs a second engine and the widgets run against a different Cesium instance than the viewer.",
+      "groupName": "cesium",
+      "matchPackageNames": ["@cesium/engine", "@cesium/widgets"]
+    },
+    {
       "description": "Patch bumps are low-risk and covered by CI (lint/build/typecheck/test) - merge automatically once checks pass. Requires 'build' to be a required status check in this repo's branch protection.",
       "matchUpdateTypes": ["patch"],
       "automerge": true,

@@ -8,7 +8,7 @@ Framework-agnostic core logic for the OpenLayers web map component: projection s
 npm install @xtramaps/web-map-openlayers
 ```
 
-Requires `ol` (`10.8.0` exactly — pinned by [`rlayers`](https://github.com/mmomtchev/rlayers)'s own peer dependency) as a peer dependency.
+Brings `ol` as a dependency, pinned to `10.8.0` exactly because [`rlayers`](https://github.com/mmomtchev/rlayers) pins its own `ol` peer dependency.
 
 ## Usage
 

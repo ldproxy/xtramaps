@@ -24,7 +24,7 @@ Then open `http://localhost:8080/packages/react/web-map-openlayers/examples/web-
 npm install @xtramaps/web-map-openlayers-react
 ```
 
-Requires `react`, `react-dom` (`^18.0.0 || ^19.0.0`), `rlayers` (`^3.9.0`), and `ol` (`10.8.0` exactly) as peer dependencies. Import `@xtramaps/web-map-openlayers-react/dist/index.css` once — it bundles `ol`'s own stylesheet plus the component's own styles.
+Requires `react` and `react-dom` (`^18.0.0 || ^19.0.0`) as peer dependencies; brings `rlayers` and `ol` (`10.8.0` exactly, as `rlayers` requires) as dependencies. Import `@xtramaps/web-map-openlayers-react/dist/index.css` once — it bundles `ol`'s own stylesheet plus the component's own styles.
 
 ## Usage
 

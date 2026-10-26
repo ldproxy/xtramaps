@@ -22,7 +22,7 @@ Then open `http://localhost:8080/packages/react/web-map-maplibre/examples/web-ma
 npm install @xtramaps/web-map-maplibre-react
 ```
 
-Requires `react`, `react-dom` (`^18.0.0 || ^19.0.0`), `@vis.gl/react-maplibre` (`^8.1.2`), and `maplibre-gl` (`^6.0.0`) as peer dependencies. Import `@xtramaps/web-map-maplibre-react/dist/index.css` once — it bundles `maplibre-gl.css`, `mapbox-gl-draw.css`, and the component's own styles.
+Requires `react` and `react-dom` (`^18.0.0 || ^19.0.0`) as peer dependencies; brings `@vis.gl/react-maplibre` and `maplibre-gl` as dependencies. Import `@xtramaps/web-map-maplibre-react/dist/index.css` once — it bundles `maplibre-gl.css`, `mapbox-gl-draw.css`, and the component's own styles.
 
 ## Usage
 

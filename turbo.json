@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["packages/vite.config.base.ts", "tsconfig.base.json"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

@@ -24,7 +24,7 @@ Then open `http://localhost:8080/packages/react/layer-control-maplibre/examples/
 npm install @xtramaps/layer-control-maplibre-react
 ```
 
-Requires `react`, `react-dom` (`^18.0.0 || ^19.0.0`), `@vis.gl/react-maplibre` (`^8.1.2`), and `maplibre-gl` (`^6.0.0`) as peer dependencies. Ships `reactstrap` as a regular dependency — bring your own Bootstrap CSS.
+Requires `react` and `react-dom` (`^18.0.0 || ^19.0.0`) as peer dependencies; brings `@vis.gl/react-maplibre` and `maplibre-gl` as dependencies. Ships `reactstrap` as a regular dependency — bring your own Bootstrap CSS.
 
 ## Usage
 

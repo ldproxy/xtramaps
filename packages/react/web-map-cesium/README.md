@@ -31,7 +31,7 @@ Then open `http://localhost:8080/packages/react/web-map-cesium/examples/web-map-
 npm install @xtramaps/web-map-cesium-react
 ```
 
-Requires `react`, `react-dom` (`^18.0.0 || ^19.0.0`), `@cesium/engine` (`^26.0.0`), and `@cesium/widgets` (`^16.0.0`) as peer dependencies. Import `@xtramaps/web-map-cesium-react/dist/index.css` once - it bundles Cesium's own widget stylesheet plus the component's own styles.
+Requires `react` and `react-dom` (`^18.0.0 || ^19.0.0`) as peer dependencies; brings `@cesium/engine` and `@cesium/widgets` as dependencies (see [`@xtramaps/web-map-cesium`](https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-cesium) for the Vite plugin that serves Cesium's runtime assets). Import `@xtramaps/web-map-cesium-react/dist/index.css` once - it bundles Cesium's own widget stylesheet plus the component's own styles.
 
 Cesium also needs its `Workers`/`Assets`/`ThirdParty` static files served separately, with `window.CESIUM_BASE_URL` set to point at them **before** the component mounts - this package does not do that for you. The example page sets it to a CDN-hosted, version-matched build (`https://unpkg.com/cesium@<version>/Build/Cesium/`); a production app would typically copy these files into its own build output instead (e.g. via `vite-plugin-static-copy` or an equivalent bundler plugin).
 

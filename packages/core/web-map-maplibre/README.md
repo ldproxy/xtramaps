@@ -8,7 +8,7 @@ Framework-agnostic core logic for the MapLibre web map component: basemap style 
 npm install @xtramaps/web-map-maplibre
 ```
 
-Requires `maplibre-gl` (`^6.0.0`) as a peer dependency.
+Brings `maplibre-gl` (`^6`) as a dependency.
 
 ## Usage
 
@@ -33,6 +33,17 @@ addData(map, null, false, geojson, "geojson", {}, defaultStyle, true, "HOVER_ID"
 - `addData()`, `setStyleGeoJson()`, `setStyleVector()` - data-layer wiring
 - `addPopup()`, `addPopupProps()` - hover/click popups
 - `getBounds()`, `getFeaturesWithIdAsProperty()`, `polygonFromBounds()`, `idProperty` - GeoJSON helpers
+
+### Vite plugin
+
+maplibre-gl computes its worker URL at runtime from the location of its own bundled code, which Vite can't detect. `maplibreWorker()` serves the worker scripts in dev and emits them into `assetsDir` on build:
+
+```js
+// vite.config.js
+import { maplibreWorker } from "@xtramaps/web-map-maplibre/vite";
+
+export default defineConfig({ plugins: [maplibreWorker()] });
+```
 
 ## License
 
