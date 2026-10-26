@@ -47,7 +47,9 @@ window.CESIUM_BASE_URL = "https://unpkg.com/cesium@1.144.0/Build/Cesium/";
   backgroundUrl="https://sgx.geodatenzentrum.de/wmts_basemapde/tile/1.0.0/de_basemapde_web_raster_farbe/default/GLOBAL_WEBMERCATOR/{TileMatrix}/{TileRow}/{TileCol}.png"
   attribution="Geobasis NRW | &copy; basemap.de / BKG"
   accessToken={null}
-  tileset={{ url: "https://demo.ldproxy.net/cologne_lod2/collections/building/3dtiles?f=json" }}
+  tileset={{
+    url: "https://demo.ldproxy.net/cologne_lod2/collections/building/3dtiles?f=json",
+  }}
   additionalStyleUrl="https://demo.ldproxy.net/cologne_lod2/collections/building/styles/surface-type?f=3dtiles"
 />;
 ```

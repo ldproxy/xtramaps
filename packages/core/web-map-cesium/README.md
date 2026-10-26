@@ -26,7 +26,9 @@ const viewer = createViewer(container, {
 
 await loadTileset(
   viewer,
-  { url: "https://demo.ldproxy.net/cologne_lod2/collections/building/3dtiles?f=json" },
+  {
+    url: "https://demo.ldproxy.net/cologne_lod2/collections/building/3dtiles?f=json",
+  },
   "https://demo.ldproxy.net/cologne_lod2/collections/building/styles/surface-type?f=3dtiles",
 );
 
