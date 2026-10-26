@@ -1,5 +1,17 @@
 # @xtramaps/layer-control-maplibre-react
 
+## 1.2.0
+
+### Minor Changes
+
+- 848561e: LayerControl: groups and radio-groups accept `opened: false` to start collapsed, and the initial selection now follows the `visibility` layout property of the style's layers instead of activating every layer. Groups start checked if all of their entries are checked, merge-groups as soon as one of their layers is visible, and radio-groups select their first entry that is not hidden in the style.
+
+### Patch Changes
+
+- a09264d: LayerControl: fully transparent fill layers (`fill-opacity: 0`, e.g. invisible click targets for polygons) no longer hide the line layers of a merge-group in its legend icon, which previously left the icon empty.
+- Updated dependencies [848561e]
+  - @xtramaps/layer-control-maplibre@1.2.0
+
 ## 1.1.0
 
 ### Minor Changes
