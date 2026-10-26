@@ -35,7 +35,7 @@
   "dependencies": {
     "@xtramaps/web-map-maplibre": "1.2.0",
     "@mapbox/mapbox-gl-draw": "^1.5.2",
-    "@turf/combine": "^7.2.0",
+    "@turf/combine": "^7.4.0",
     "maplibre-gl": "^6.3.0",
     "@vis.gl/react-maplibre": "^8.1.3"
   },
