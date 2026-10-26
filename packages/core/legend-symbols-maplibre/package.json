@@ -32,6 +32,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@maplibre/maplibre-gl-style-spec": "^22.0.0"
+    "@maplibre/maplibre-gl-style-spec": "^22.0.1"
   }
 }
