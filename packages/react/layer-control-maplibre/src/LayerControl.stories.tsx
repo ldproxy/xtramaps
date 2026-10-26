@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import MapLibre from "@xtramaps/web-map-maplibre-react";
 import "@xtramaps/web-map-maplibre-react/dist/index.css";
-// LayerControl is built on reactstrap and expects the host app to bring Bootstrap CSS
-// (as ogcapi-html does) - without it <Collapse> never actually hides anything.
+// LayerControl is built on reactstrap and expects the host app to bring Bootstrap CSS -
+// without it <Collapse> never actually hides anything.
 import "bootstrap/dist/css/bootstrap.min.css";
 import type { Map as MaplibreMap } from "maplibre-gl";
 import { expect, userEvent, waitFor, within } from "storybook/test";
@@ -11,8 +11,7 @@ import LayerControl from "./LayerControl";
 const STYLE_URL = "https://demo.ldproxy.net/daraa/styles/topographic?f=mbs";
 
 // Real layer ids from the Daraa "topographic" style, structured to exercise every entry
-// kind LayerControl supports - mirrors the layerGroupControl example from the original
-// ogcapi-html MapLibre/stories.jsx. preferStyle is disabled so these entries are used
+// kind LayerControl supports. preferStyle is disabled so these entries are used
 // deterministically instead of the style's own embedded "ldproxy:layerControl" metadata.
 const entries = [
   {
@@ -196,10 +195,9 @@ export const NestedGroups: Story = {
   },
 };
 
-// The style's own metadata is what production actually uses day to day (LayerControl
-// defaults to `preferStyle: true`), yet it was never exercised by an automated test - the
-// story above deliberately disables it for deterministic, hand-authored entries. This
-// story renders LayerControl "as ogcapi-html would" - no `entries` prop at all.
+// The style's own metadata is the default source of entries (`preferStyle: true`); the
+// story above disables it for deterministic, hand-authored entries. This story passes no
+// `entries` prop at all.
 export const StyleMetadata: Story = {
   render: () => (
     <MapLibre

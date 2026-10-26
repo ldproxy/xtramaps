@@ -17,7 +17,7 @@ export interface ComputeInitialViewOptions {
 }
 
 /**
- * Precedence, ported 1:1 from the source: a style's own center/bounds first, then the
+ * Precedence: a style's own center/bounds first, then the
  * active TileMatrixSet's default view, then the `bounds` prop, else no initial view at all.
  */
 export const computeInitialView = ({

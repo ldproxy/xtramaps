@@ -12,13 +12,12 @@ import { Viewer } from "@cesium/widgets";
 import type { CesiumMapOptions } from "./types";
 
 /**
- * Mirrors ldproxy's ogcapi-html `Cesium` component. `Ion.defaultAccessToken` and
+ * Creates a Cesium `Viewer` with background imagery and optional terrain. `Ion.defaultAccessToken` and
  * `Camera.DEFAULT_VIEW_RECTANGLE`/`DEFAULT_VIEW_FACTOR` are mutated here because
  * they're global statics on the Cesium API itself, not per-viewer state.
  *
  * Async because `CesiumTerrainProvider.fromUrl`/`IonResource.fromAssetId` are
- * promise-based in current `@cesium/engine` - the original's synchronous
- * `new CesiumTerrainProvider({ url, ... })` no longer exists.
+ * promise-based.
  */
 export async function createViewer(
   container: string | HTMLElement,

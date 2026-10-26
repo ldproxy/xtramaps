@@ -9,10 +9,9 @@ import type { Viewer } from "@cesium/widgets";
 import type { CesiumTilesetConfig } from "./types";
 
 /**
- * Loads a 3D Tileset into `viewer`, ported from ldproxy's ogcapi-html `Cesium`
- * component. Unlike the original (fire-and-forget, no `.catch`), failures are
- * logged instead of failing silently - a reusable component can be mounted
- * more than once and shouldn't leave an unhandled rejection behind.
+ * Loads a 3D Tileset into `viewer`. Failures are logged instead of failing
+ * silently - a reusable component can be mounted more than once and shouldn't
+ * leave an unhandled rejection behind.
  */
 export async function loadTileset(
   viewer: Viewer,

@@ -43,7 +43,7 @@ interface StyleConfig {
 }
 
 export interface OpenLayersRef {
-  /** Switches the active TileMatrixSet - replaces the old `globalThis._map.setCurrentTileMatrixSet` bridge. */
+  /** Switches the active TileMatrixSet. */
   setCurrentTileMatrixSet: (tileMatrixSet: string) => void;
 }
 

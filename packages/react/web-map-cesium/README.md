@@ -1,19 +1,17 @@
 # @xtramaps/web-map-cesium-react
 
-React Cesium map component. Wraps [`@xtramaps/web-map-cesium`](https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-cesium) - migrated from `ogcapi-html`'s `Cesium` component onto current `@cesium/engine`/`@cesium/widgets` (`^26`/`^16`).
+React Cesium map component. A thin wrapper around [`@xtramaps/web-map-cesium`](https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-cesium)'s viewer and tileset logic:
 
-Unlike the MapLibre/OpenLayers migrations, the original `Cesium` component was never a React component - it was a single imperative function, called once per page load, with no cleanup, no error handling on its async tileset/style loading, and no LayerControl/legend equivalent (there never was one for Cesium either). This wrapper is new: a thin `useEffect`-driven component around the same viewer/tileset logic, plus two deliberate additions the original didn't have -
+- the viewer is created on mount and destroyed (`viewer.destroy()`) on unmount
+- viewer/tileset creation failures are caught and logged
 
-- `viewer.destroy()` runs on unmount, since a reusable component can mount/unmount repeatedly (Storybook, demos, consumer apps), unlike the original's one-shot page script
-- viewer/tileset creation failures are caught and logged instead of failing silently
-
-The component mounts once; prop changes after the initial render are not reflected (Cesium never had a dynamic update path the way OpenLayers/MapLibre's TileMatrixSet switching does).
+The component mounts once; prop changes after the initial render are not applied.
 
 ## Example
 
 Browse it interactively via Storybook: `npm run storybook` from the repo root, then open the `web-map-cesium/CesiumMap` story.
 
-Not published to npm yet, so there is no CDN-hosted live example. To try the standalone demo locally:
+To try the standalone demo locally:
 
 ```sh
 git clone https://github.com/ldproxy/xtramaps.git
@@ -33,7 +31,7 @@ npm install @xtramaps/web-map-cesium-react
 
 Requires `react` and `react-dom` (`^18.0.0 || ^19.0.0`) as peer dependencies; brings `@cesium/engine` and `@cesium/widgets` as dependencies (see [`@xtramaps/web-map-cesium`](https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-cesium) for the Vite plugin that serves Cesium's runtime assets). Import `@xtramaps/web-map-cesium-react/dist/index.css` once - it bundles Cesium's own widget stylesheet plus the component's own styles.
 
-Cesium also needs its `Workers`/`Assets`/`ThirdParty` static files served separately, with `window.CESIUM_BASE_URL` set to point at them **before** the component mounts - this package does not do that for you. The example page sets it to a CDN-hosted, version-matched build (`https://unpkg.com/cesium@<version>/Build/Cesium/`); a production app would typically copy these files into its own build output instead (e.g. via `vite-plugin-static-copy` or an equivalent bundler plugin).
+Cesium also needs its `Workers`/`Assets`/`ThirdParty` static files served separately, with `window.CESIUM_BASE_URL` pointing at them **before** the component mounts. With Vite, the `cesiumAssets()` plugin from `@xtramaps/web-map-cesium/vite` serves and emits them. The example page and Storybook point it at a CDN-hosted build instead (`https://unpkg.com/cesium@<version>/Build/Cesium/`).
 
 ## Usage
 

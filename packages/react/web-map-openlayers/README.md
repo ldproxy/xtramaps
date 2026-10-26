@@ -1,12 +1,12 @@
 # @xtramaps/web-map-openlayers-react
 
-React OpenLayers map component. Wraps [`@xtramaps/web-map-openlayers`](https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-openlayers) and [`rlayers`](https://github.com/mmomtchev/rlayers) — migrated 1:1 from `ogcapi-html`'s `OpenLayers` component onto current `rlayers` (`3.9.0`) and `ol` (`10.8.0`). Unlike the MapLibre side of this migration, there is no LayerControl/legend equivalent to port here — the original component never had one.
+React OpenLayers map component. Wraps [`@xtramaps/web-map-openlayers`](https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-openlayers) and [`rlayers`](https://github.com/mmomtchev/rlayers).
 
 ## Example
 
 Browse it interactively via Storybook: `npm run storybook` from the repo root, then open the `web-map-openlayers/OpenLayers` story.
 
-Not published to npm yet, so there is no CDN-hosted live example. To try the standalone demo locally:
+To try the standalone demo locally:
 
 ```sh
 git clone https://github.com/ldproxy/xtramaps.git
@@ -45,11 +45,11 @@ const ref = useRef<OpenLayersRef>(null);
   tileMatrixSets={tileMatrixSets}
 />;
 
-// switch the active TileMatrixSet - replaces the old `globalThis._map.setCurrentTileMatrixSet` bridge
+// switch the active TileMatrixSet
 ref.current?.setCurrentTileMatrixSet("WorldMercatorWGS84Quad");
 ```
 
-`styleUrl` requires at least one complete entry in `tileMatrixSets` (with `extent`/`resolutions`/`sizes` as JSON-encoded strings) - the style fetch only fires once a TileMatrixSet is active. In production, ldproxy computes these entries server-side; see the example page for how to build one from the raw OGC TileMatrixSet resource.
+`styleUrl` requires at least one complete entry in `tileMatrixSets` (with `extent`/`resolutions`/`sizes` as JSON-encoded strings) - the style fetch only fires once a TileMatrixSet is active. Usually the server provides these entries; see the example page for how to build one from the raw OGC TileMatrixSet resource.
 
 ### Exports
 

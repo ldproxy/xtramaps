@@ -1,6 +1,6 @@
 # @xtramaps/layer-control-maplibre
 
-Framework-agnostic core logic for the LayerControl component: parses a nested group / radio-group / merge-group configuration (or a style's own embedded `metadata["ldproxy:layerControl"]`) against a MapLibre style into a hydrated, ready-to-render tree. Extracted from `ogcapi-html`'s `LayerControl` component.
+Framework-agnostic core logic for the LayerControl component: parses a nested group / radio-group / merge-group configuration (or a style's own embedded `metadata["ldproxy:layerControl"]`) against a MapLibre style into a hydrated, ready-to-render tree.
 
 ## Install
 

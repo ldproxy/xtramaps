@@ -3,12 +3,9 @@ import type { CesiumMapOptions } from "@xtramaps/web-map-cesium";
 import { createViewer, loadTileset } from "@xtramaps/web-map-cesium";
 import { useEffect, useRef } from "react";
 
-// The original ported this as ~19 individual widget CSS imports, with a comment
-// that the aggregate `widgets.css` "does not work because of relative engine
-// import" under the old webpack build. That relative import (crossing from
-// @cesium/widgets/Source into @cesium/engine/Source) resolves correctly under
-// this repo's Vite build (verified via a full production build + browser
-// check), so the single aggregate import is used here instead.
+// The aggregate `widgets.css` imports engine styles via a relative path crossing from
+// @cesium/widgets/Source into @cesium/engine/Source; Vite resolves that correctly, so
+// the single import replaces importing each widget stylesheet.
 import "@cesium/widgets/Source/widgets.css";
 import "./custom.css";
 
@@ -17,7 +14,7 @@ export interface CesiumMapProps extends CesiumMapOptions {}
 export function CesiumMap(props: CesiumMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: mounted once, matching the original's single page-lifetime mount - Cesium never had a dynamic prop-update path (unlike the OpenLayers/MapLibre TMS-switching equivalents)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mounted once; there is no prop-update path for the Cesium viewer
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;

@@ -14,9 +14,7 @@ declare global {
 }
 window.CESIUM_BASE_URL = "https://unpkg.com/cesium@1.144.0/Build/Cesium/";
 
-// Real dataset from ldproxy's own demo deployment - "3D Buildings in Cologne
-// (LoD2)" - the same one the original ogcapi-html Cesium component was built to
-// render (`FeaturesView`/`TilesetView`'s glTF-from-features and Tiles3D paths).
+// Real dataset from the ldproxy demo deployment: "3D Buildings in Cologne (LoD2)".
 const BACKGROUND_URL =
   "https://sgx.geodatenzentrum.de/wmts_basemapde/tile/1.0.0/de_basemapde_web_raster_farbe/default/GLOBAL_WEBMERCATOR/{TileMatrix}/{TileRow}/{TileCol}.png";
 const ATTRIBUTION = "Geobasis NRW | &copy; basemap.de / BKG";

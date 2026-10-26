@@ -9,8 +9,8 @@ import type {
 /**
  * Loose recursive tree-node shape shared by the config-parsing helpers below - entries
  * are either plain layer-id strings or objects that may recurse via `entries`,
- * `subLayers` or `layers` (the latter two never occur in the current data model but are
- * preserved 1:1 from the source implementation, which supported them defensively).
+ * `subLayers` or `layers` (the latter two don't occur in the current data model and are
+ * supported defensively).
  */
 type EntryLike =
   | string

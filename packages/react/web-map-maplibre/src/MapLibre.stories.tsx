@@ -123,9 +123,8 @@ export const GeoJsonDataWithDefaultStyleMerge: Story = {
   },
 };
 
-// Regression test for a second real bug from the same upgrade: `Configuration` used to call
-// map.addSource/addLayer (and the popup wiring below) before the map's own style had finished
-// loading, throwing "Style is not done loading". Also doubles as a health check for
+// Guards against `Configuration` calling map.addSource/addLayer (and the popup wiring below)
+// before the map's own style has finished loading, which throws "Style is not done loading". Also doubles as a health check for
 // maplibre-gl's worker file (maplibre-gl-worker.mjs, loaded via a relative import.meta.url path
 // bundlers can't statically discover) - if that file is missing or 404s, vector tiles never
 // render and queryRenderedFeatures() stays empty forever.
@@ -447,9 +446,9 @@ function CanvasOverlayProbe({
   );
 }
 
-// `CanvasOverlay`/`CanvasPlugin` is the portal ldproxy's own bbox-drawing UI (Resizer/handles,
-// which lives outside this repo) mounts into - it never got any coverage of its own here. This
-// checks the two things that would silently break every consumer of it: the child actually
+// `CanvasOverlay`/`CanvasPlugin` is a portal for custom UI drawn on the map (e.g. a bbox
+// editor with resize handles). This checks the two things that would silently break every
+// consumer of it: the child actually
 // gets portaled into the map's canvas container (not just rendered anywhere), and it really
 // receives a live `map`/`maplibre` instance, not stale/undefined props.
 export const CanvasOverlayPortalsChildIntoMapCanvas: Story = {

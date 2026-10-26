@@ -66,9 +66,8 @@
   <body>
     <h1>Web Map OpenLayers</h1>
     <p class="hint">
-      <code>@xtramaps/web-map-openlayers-react</code> - migrated from
-      <code>ogcapi-html</code> onto current <code>rlayers</code> (3.9.0) and
-      <code>ol</code> (10.8.0).
+      <code>@xtramaps/web-map-openlayers-react</code>, built on
+      <code>rlayers</code> and <code>ol</code>.
     </p>
 
     <div class="grid">
@@ -100,9 +99,8 @@
       // The styleUrl fetch only fires once `currentTileMatrixSet` is truthy - it starts
       // out as `tileMatrixSets[0].tileMatrixSet`, so at least one *complete* entry
       // (extent/resolutions/sizes included - DynamicSource JSON.parses them
-      // unconditionally on mount) is required whenever `styleUrl` is used. In production
-      // ldproxy computes this server-side; here it's built from the same OGC
-      // TileMatrixSet resource the server itself would read.
+      // unconditionally on mount) is required whenever `styleUrl` is used. Usually the
+      // server provides it; here it's built from the raw OGC TileMatrixSet resource.
       const tmsDefinition = await fetch(
         "https://demo.ldproxy.net/daraa/tileMatrixSets/WebMercatorQuad?f=json",
       ).then((r) => r.json());

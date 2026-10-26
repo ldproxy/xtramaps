@@ -1,10 +1,10 @@
 # @xtramaps/web-map-maplibre-react
 
-React MapLibre map component. Wraps [`@xtramaps/web-map-maplibre`](https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-maplibre) and [`@vis.gl/react-maplibre`](https://visgl.github.io/react-maplibre/) — replaces the unmaintained `react-maplibre-ui`.
+React MapLibre map component. Wraps [`@xtramaps/web-map-maplibre`](https://github.com/ldproxy/xtramaps/tree/main/packages/core/web-map-maplibre) and [`@vis.gl/react-maplibre`](https://visgl.github.io/react-maplibre/).
 
 ## Example
 
-Not published to npm yet, so there is no CDN-hosted live example (once published, this section will link one the same way [`legend-symbols-maplibre-react`](https://github.com/ldproxy/xtramaps/tree/main/packages/react/legend-symbols-maplibre#example) does). To try the standalone demo locally:
+To try the standalone demo locally:
 
 ```sh
 git clone https://github.com/ldproxy/xtramaps.git

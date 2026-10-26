@@ -119,9 +119,7 @@ function Control({
     // source to have finished loading, which parse() has no need to wait for (it only reads
     // the style's own sources/layers definitions). Gating on isStyleLoaded() here raced
     // intermittently on datasets with many/slow-loading tiles (large vector styles): whether
-    // it fired at all in time depended on how long tiles happened to take, so it "randomly"
-    // worked or didn't depending on network conditions - not fixed by the isStyleLoaded()
-    // check that previously lived here, which was gating on the wrong signal entirely.
+    // it fired in time depended on how long tiles happened to take.
     applyConfig();
     map.on("style.load", applyConfig);
     return () => {

@@ -4,8 +4,8 @@
   height: 100%;
 }
 
-/* Ported from ogcapi-html's Cesium/style.css - repositions the credit bar and
-   hides the duplicate "Cesium ion" link, leaving only the custom attribution. */
+/* Repositions the credit bar and hides the duplicate "Cesium ion" link,
+   leaving only the custom attribution. */
 .cesium-viewer-bottom {
   left: 5px !important;
   bottom: 0 !important;

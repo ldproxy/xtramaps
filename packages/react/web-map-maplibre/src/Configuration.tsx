@@ -72,7 +72,7 @@ function Configuration({
 }: ConfigurationProps) {
   const { current: mapRef } = useMap();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: run once when the map instance becomes available, matching the original useMaplibreUIEffect(..., []) semantics
+  // biome-ignore lint/correctness/useExhaustiveDependencies: run once when the map instance becomes available
   useEffect(() => {
     if (!mapRef) return;
     const map = mapRef.getMap();
@@ -153,10 +153,9 @@ function Configuration({
         );
       }
     } else if (styleUrl && popup) {
-      // The style itself is already applied via MapLibre's `mapStyle` prop (see MapLibre.tsx) -
-      // setting it imperatively here instead used to leave @vis.gl/react-maplibre's own source
-      // cache bookkeeping out of sync, so vector sources were registered but never actually
-      // started loading tiles. Only popup wiring for the style's own layers is left to do here.
+      // The style itself is applied via MapLibre's `mapStyle` prop (see MapLibre.tsx). Setting it
+      // imperatively here would leave @vis.gl/react-maplibre's source cache bookkeeping out of
+      // sync, so vector sources get registered but never start loading tiles. Only popup wiring for the style's own layers is left to do here.
       runWhenStyleLoaded(() => {
         if (popup === "HOVER_ID") {
           addPopup(map, featureTitles, hoverLayers);

@@ -6,7 +6,7 @@ React LayerControl component for MapLibre: nested groups, radio-groups, and merg
 
 Browse it interactively via Storybook: `npm run storybook` from the repo root, then open the `layer-control-maplibre/LayerControl` story.
 
-Not published to npm yet, so there is no CDN-hosted live example. To try the standalone demo locally:
+To try the standalone demo locally:
 
 ```sh
 git clone https://github.com/ldproxy/xtramaps.git

@@ -21,9 +21,8 @@ interface TileMatrixSetInput {
 
 // The styleUrl fetch only fires once `currentTileMatrixSet` is truthy, so a *complete*
 // entry (extent/resolutions/sizes included - DynamicSource JSON.parses them
-// unconditionally on mount) is required for every TileMatrixSet used. In production
-// ldproxy computes this server-side; here it's built from the same OGC TileMatrixSet
-// resource the server itself would read.
+// unconditionally on mount) is required for every TileMatrixSet used. Usually the
+// server provides it; here it's built from the raw OGC TileMatrixSet resource.
 async function buildTileMatrixSet(
   id: string,
   projection: string,

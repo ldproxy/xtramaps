@@ -42,8 +42,8 @@ npx turbo build --filter=@xtramaps/legend-symbols-maplibre
 
 ## Trying things out manually
 
-- **Storybook** (`npm run storybook`, then open `http://localhost:6006`) is the main way to browse and interact with components — currently covers `legend-symbols-maplibre`, `layer-control-maplibre`, `web-map-openlayers`, and `web-map-cesium`. `npm run build-storybook` builds a static version. Storybook's CLI requires Node `>=20.19`; see `engines` in `package.json`.
-- Some packages also ship a standalone HTML demo under `examples/*.html` (see that package's README). These aren't published anywhere yet, so they load sibling packages from local `dist/` output instead of a CDN — they only work when served over `http://`, not opened directly as a `file://` URL (browsers block ES module imports there). Any static file server works, e.g. from the repo root:
+- **Storybook** (`npm run storybook`, then open `http://localhost:6006`) is the main way to browse and interact with components; it covers every React package. `npm run build-storybook` builds a static version. Storybook's CLI requires Node `>=20.19`; see `engines` in `package.json`.
+- Some packages also ship a standalone HTML demo under `examples/*.html` (see that package's README). They load sibling packages from local `dist/` output, so they only work when served over `http://`, not opened directly as a `file://` URL (browsers block ES module imports there). Any static file server works, e.g. from the repo root:
   ```sh
   npm run build
   python3 -m http.server 8080

@@ -1,6 +1,6 @@
 # @xtramaps/web-map-maplibre
 
-Framework-agnostic core logic for the MapLibre web map component: basemap style resolution, GeoJSON/vector/raster data-layer wiring, and hover/click popups. Extracted from `ogcapi-html`'s `MapLibre` component.
+Framework-agnostic core logic for the MapLibre web map component: basemap style resolution, GeoJSON/vector/raster data-layer wiring, and hover/click popups.
 
 ## Install
 

@@ -61,9 +61,8 @@ export const setDynamicSource = (
       ([, source]) => source.type === "vector",
     )?.[0];
     if (sourceName) {
-      // The source passes styleObject for both raster and vector-tile layers alike
-      // (preserved from the original), but stylefunction only makes sense - and is only
-      // ever actually exercised - for the vector-tile layer.
+      // The source passes styleObject for both raster and vector-tile layers alike, but
+      // stylefunction only makes sense for the vector-tile layer.
       stylefunction(
         layer as unknown as VectorTileLayer,
         styleObject,
