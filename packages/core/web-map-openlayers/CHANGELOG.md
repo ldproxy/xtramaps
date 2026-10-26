@@ -1,5 +1,11 @@
 # @xtramaps/web-map-openlayers
 
+## 1.2.0
+
+### Minor Changes
+
+- 06deb08: Map libraries (maplibre-gl, @vis.gl/react-maplibre, ol, rlayers, @cesium/engine, @cesium/widgets) are now regular dependencies instead of peer dependencies, so consumers no longer need to install them.
+
 ## 1.1.0
 
 ### Minor Changes
