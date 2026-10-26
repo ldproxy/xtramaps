@@ -13,7 +13,10 @@ Brings `ol` as a dependency, pinned to `10.8.0` exactly because [`rlayers`](http
 ## Usage
 
 ```ts
-import { setupProjections, computeInitialView } from "@xtramaps/web-map-openlayers";
+import {
+  setupProjections,
+  computeInitialView,
+} from "@xtramaps/web-map-openlayers";
 
 // register EPSG:25832/25833/3395 with ol - call once at module load, like the source did
 setupProjections();

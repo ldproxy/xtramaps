@@ -292,13 +292,13 @@ const loadMultipleSprites = async (
   });
 
   // first image as fallback for compatibility, but main.js will search through sprites if available
-  const firstImage = (
-    loadedSprites.find((sprite) => sprite.image.status === "fulfilled")
-      ?.image as PromiseFulfilledResult<HTMLImageElement>
-  ).value;
+  const firstLoaded = loadedSprites.find(
+    (sprite) => sprite.image.status === "fulfilled",
+  );
+  if (!firstLoaded) return undefined;
 
   return {
-    image: firstImage,
+    image: firstLoaded.image.value,
     json: mergedJson,
     sprites: loadedSprites,
   };

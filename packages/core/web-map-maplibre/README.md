@@ -17,13 +17,26 @@ import { resolveWireframeBaseStyle, addData } from "@xtramaps/web-map-maplibre";
 
 const style = await resolveWireframeBaseStyle({
   backgroundUrl: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  attribution:
+    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
   defaultUrl: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  defaultAttribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  defaultAttribution:
+    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 });
 
 // after creating a maplibre-gl Map with `style`:
-addData(map, null, false, geojson, "geojson", {}, defaultStyle, true, "HOVER_ID", featureTitles);
+addData(
+  map,
+  null,
+  false,
+  geojson,
+  "geojson",
+  {},
+  defaultStyle,
+  true,
+  "HOVER_ID",
+  featureTitles,
+);
 ```
 
 ### Exports

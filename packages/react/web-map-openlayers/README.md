@@ -29,7 +29,9 @@ Requires `react` and `react-dom` (`^18.0.0 || ^19.0.0`) as peer dependencies; br
 ## Usage
 
 ```tsx
-import OpenLayers, { type OpenLayersRef } from "@xtramaps/web-map-openlayers-react";
+import OpenLayers, {
+  type OpenLayersRef,
+} from "@xtramaps/web-map-openlayers-react";
 import "@xtramaps/web-map-openlayers-react/dist/index.css";
 import { useRef } from "react";
 
