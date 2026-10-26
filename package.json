@@ -42,7 +42,7 @@
     "@vitest/browser-playwright": "4.1.11",
     "@vitest/coverage-v8": "4.1.11",
     "bootstrap": "5.3.8",
-    "lefthook": "2.1.4",
+    "lefthook": "2.2.2",
     "npm-check-updates": "19.6.6",
     "playwright": "1.62.1",
     "react": "19.2.8",
