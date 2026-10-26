@@ -1,5 +1,18 @@
 # @xtramaps/web-map-maplibre-react
 
+## 1.2.1
+
+### Patch Changes
+
+- 41b60ec: Ship CommonJS type declarations (`index.d.cts`), so `require` consumers with `moduleResolution: node16`/`nodenext` get types. Declarations are now bundled into one file per entry.
+- f7db57f: fix(deps): update dependency @mapbox/mapbox-gl-draw to ^1.5.2
+- 452e786: fix(deps): update dependency @vis.gl/react-maplibre to ^8.1.3
+- 01a91e0: fix(deps): update dependency @turf/combine to ^7.4.0
+- e473328: Update READMEs.
+- Updated dependencies [41b60ec]
+- Updated dependencies [e473328]
+  - @xtramaps/web-map-maplibre@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes
