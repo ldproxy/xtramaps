@@ -1,5 +1,17 @@
 # @xtramaps/layer-control-maplibre
 
+## 1.3.1
+
+### Patch Changes
+
+- 41b60ec: Ship CommonJS type declarations (`index.d.cts`), so `require` consumers with `moduleResolution: node16`/`nodenext` get types. Declarations are now bundled into one file per entry.
+- 782459f: fix(deps): update dependency @maplibre/maplibre-gl-style-spec to ^22.0.1
+- e473328: Update READMEs.
+- Updated dependencies [41b60ec]
+- Updated dependencies [782459f]
+- Updated dependencies [dcb78fb]
+  - @xtramaps/legend-symbols-maplibre@1.0.1
+
 ## 1.2.0
 
 ### Minor Changes

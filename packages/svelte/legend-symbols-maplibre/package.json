@@ -1,6 +1,6 @@
 {
   "name": "@xtramaps/legend-symbols-maplibre-svelte",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/svelte/legend-symbols-maplibre#readme",
   "repository": {
@@ -32,7 +32,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@xtramaps/legend-symbols-maplibre": "1.0.0"
+    "@xtramaps/legend-symbols-maplibre": "1.0.1"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"

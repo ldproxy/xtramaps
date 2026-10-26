@@ -1,5 +1,18 @@
 # @xtramaps/layer-control-maplibre-react
 
+## 1.3.1
+
+### Patch Changes
+
+- 41b60ec: Ship CommonJS type declarations (`index.d.cts`), so `require` consumers with `moduleResolution: node16`/`nodenext` get types. Declarations are now bundled into one file per entry.
+- 452e786: fix(deps): update dependency @vis.gl/react-maplibre to ^8.1.3
+- e473328: Update READMEs.
+- Updated dependencies [41b60ec]
+- Updated dependencies [782459f]
+- Updated dependencies [e473328]
+  - @xtramaps/layer-control-maplibre@1.3.1
+  - @xtramaps/legend-symbols-maplibre-react@1.0.1
+
 ## 1.3.0
 
 ### Minor Changes

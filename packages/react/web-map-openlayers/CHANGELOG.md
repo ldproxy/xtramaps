@@ -1,5 +1,15 @@
 # @xtramaps/web-map-openlayers-react
 
+## 1.2.1
+
+### Patch Changes
+
+- 41b60ec: Ship CommonJS type declarations (`index.d.cts`), so `require` consumers with `moduleResolution: node16`/`nodenext` get types. Declarations are now bundled into one file per entry.
+- e473328: Update READMEs.
+- Updated dependencies [41b60ec]
+- Updated dependencies [e473328]
+  - @xtramaps/web-map-openlayers@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes

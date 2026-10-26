@@ -1,6 +1,6 @@
 {
   "name": "@xtramaps/layer-control-maplibre-react",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "license": "MIT",
   "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/react/layer-control-maplibre#readme",
   "repository": {
@@ -32,8 +32,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@xtramaps/layer-control-maplibre": "1.2.0",
-    "@xtramaps/legend-symbols-maplibre-react": "1.0.0",
+    "@xtramaps/layer-control-maplibre": "1.3.1",
+    "@xtramaps/legend-symbols-maplibre-react": "1.0.1",
     "reactstrap": "^9.2.3",
     "maplibre-gl": "^6.3.0",
     "@vis.gl/react-maplibre": "^8.1.3"
@@ -47,7 +47,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.0",
-    "@xtramaps/web-map-maplibre-react": "1.2.0",
+    "@xtramaps/web-map-maplibre-react": "1.2.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "storybook": "10.6.4"
