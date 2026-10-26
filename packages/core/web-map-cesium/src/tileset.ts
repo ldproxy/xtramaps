@@ -8,6 +8,9 @@ import {
 import type { Viewer } from "@cesium/widgets";
 import type { CesiumTilesetConfig } from "./types";
 
+// @cesium/engine re-exports Color from @cesium/core as a value only.
+type CesiumColor = InstanceType<typeof Color>;
+
 /**
  * Loads a 3D Tileset into `viewer`. Failures are logged instead of failing
  * silently - a reusable component can be mounted more than once and shouldn't
@@ -22,7 +25,7 @@ export async function loadTileset(
 
   const options: Cesium3DTileset.ConstructorOptions = {
     outlineColor: outlineColor
-      ? (Color[outlineColor as keyof typeof Color] as Color)
+      ? (Color[outlineColor as keyof typeof Color] as CesiumColor)
       : Color.DIMGREY,
   };
 
