@@ -33,12 +33,7 @@
   },
   "dependencies": {
     "ol-mapbox-style": "^13.4.2",
-    "proj4": "^2.21.0"
-  },
-  "peerDependencies": {
-    "ol": "10.8.0"
-  },
-  "devDependencies": {
-    "ol": "10.8.0"
+    "proj4": "^2.21.0",
+    "ol": "^10.8.0"
   }
 }

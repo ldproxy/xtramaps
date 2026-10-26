@@ -1,0 +1,24 @@
+name: Renovate Changesets
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+
+jobs:
+  changeset:
+    # Matching the PR author (not the branch name) keeps fork PRs from triggering the PAT.
+    if: github.event.pull_request.user.login == 'renovate[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      # A PAT instead of GITHUB_TOKEN, so the pushed commit triggers CI and the required check can pass.
+      - uses: mscharley/dependency-changesets-action@874dac2372a085cb94f750e8bdf5b1173a838a75 # v1.2.5
+        with:
+          token: ${{ secrets.RENOVATE_CHANGESETS_TOKEN }}
+          use-conventional-commits: true
+          author-name: github-actions[bot]
+          author-email: 41898282+github-actions[bot]@users.noreply.github.com

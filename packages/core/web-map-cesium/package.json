@@ -31,11 +31,7 @@
     "build": "vite build",
     "typecheck": "tsc --noEmit"
   },
-  "peerDependencies": {
-    "@cesium/engine": "^26.0.0",
-    "@cesium/widgets": "^16.0.0"
-  },
-  "devDependencies": {
+  "dependencies": {
     "@cesium/engine": "^26.2.0",
     "@cesium/widgets": "^16.1.1"
   }

@@ -44,10 +44,11 @@ Each library has: `package.json`, `tsconfig.json`, `vite.config.ts`, `src/index.
 - Shared devDeps (`typescript`, `vite`, `vite-plugin-dts`) live in root only — do not add to individual packages
 - Framework deps (react, vue, svelte) are externalized and declared as `peerDependencies`
 - Core deps are listed in `dependencies` (not peers)
+- Map libraries (maplibre-gl, ol, cesium, their React bindings) are `dependencies`, not peers: xtramaps brings the map with it, so consumers get map library updates only through xtramaps releases
 - Biome handles formatting and linting — no Prettier or ESLint
 - Changesets for versioning — run `npx changeset` after changes
 - Storybook config lives at the repo root (`.storybook/`); stories live next to the code they cover (`packages/react/<lib>/src/*.stories.tsx`), not in a separate app. `@storybook/addon-vitest` runs every story (including its `play` function) as a Vitest test in real Chromium — no separate test framework needed
-- Playwright's Chromium binary installs automatically via the root `prepare` script (`npm install` → `playwright install chromium`)
+- Playwright's Chromium binary installs on demand via the root `pretest` script (`npm run test` → `playwright install chromium`; a no-op once installed)
 
 ## Adding a New Library
 

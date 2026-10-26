@@ -33,12 +33,7 @@
   },
   "dependencies": {
     "@maplibre/maplibre-gl-style-spec": "^26.0.0",
-    "@turf/bbox": "7.4.0"
-  },
-  "peerDependencies": {
-    "maplibre-gl": "^6.0.0"
-  },
-  "devDependencies": {
+    "@turf/bbox": "7.4.0",
     "maplibre-gl": "^6.3.0"
   }
 }

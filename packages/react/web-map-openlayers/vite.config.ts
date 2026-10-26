@@ -4,7 +4,7 @@ import { defineLibConfig } from "../../vite.config.base";
 export default defineLibConfig({
   plugins: [react()],
   // ol/ol.css must stay bundled (it's a real stylesheet, not a JS module to defer to the
-  // peer); everything else under the "ol"/"ol/..." specifiers is externalized.
+  // dependency); everything else under the "ol"/"ol/..." specifiers is externalized.
   external: (id) => {
     if (id === "ol/ol.css") return false;
     return (

@@ -1,8 +1,29 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
   "prConcurrentLimit": 5,
+  "gitIgnoredAuthors": [
+    "41898282+github-actions[bot]@users.noreply.github.com"
+  ],
   "packageRules": [
+    {
+      "description": "Only runtime/peer bumps of published packages are user-facing: 'fix' makes dependency-changesets-action add a patch changeset; everything else stays 'chore' and gets none.",
+      "matchPackageNames": ["*"],
+      "semanticCommitType": "chore"
+    },
+    {
+      "description": "Published packages bring their map library with them, so consumers only see these bumps through xtramaps releases. 'bump' moves the range floor so every update is a real change for consumers.",
+      "matchFileNames": ["packages/**"],
+      "matchDepTypes": ["dependencies", "peerDependencies"],
+      "rangeStrategy": "bump",
+      "semanticCommitType": "fix"
+    },
+    {
+      "description": "A major bump of a framework mirrored as peer + devDependency widens the peer range, but Renovate takes the commit type from the devDependency upgrade.",
+      "matchFileNames": ["packages/**"],
+      "matchUpdateTypes": ["major"],
+      "semanticCommitType": "fix"
+    },
     {
       "description": "Patch bumps are low-risk and covered by CI (lint/build/typecheck/test) - merge automatically once checks pass. Requires 'build' to be a required status check in this repo's branch protection.",
       "matchUpdateTypes": ["patch"],

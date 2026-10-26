@@ -34,22 +34,20 @@
   "dependencies": {
     "@xtramaps/layer-control-maplibre": "1.2.0",
     "@xtramaps/legend-symbols-maplibre-react": "1.0.0",
-    "reactstrap": "^9.2.3"
+    "reactstrap": "^9.2.3",
+    "maplibre-gl": "^6.3.0",
+    "@vis.gl/react-maplibre": "^8.1.2"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0",
-    "@vis.gl/react-maplibre": "^8.1.2",
-    "maplibre-gl": "^6.0.0"
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@storybook/react-vite": "10.5.7",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.0",
-    "@vis.gl/react-maplibre": "^8.1.2",
     "@xtramaps/web-map-maplibre-react": "1.1.1",
-    "maplibre-gl": "^6.3.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "storybook": "10.5.7"

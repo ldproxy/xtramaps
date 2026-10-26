@@ -25,15 +25,16 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo build && changeset publish",
-    "prepare": "lefthook install && playwright install chromium",
+    "prepare": "lefthook install",
     "upgrade": "ncu --workspaces --root --interactive --format group",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "pretest": "playwright install chromium",
     "test": "vitest run"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.6",
-    "@changesets/cli": "^2.30.0",
+    "@changesets/cli": "3.0.3",
     "@commitlint/cli": "20.5.3",
     "@commitlint/config-conventional": "20.5.3",
     "@storybook/addon-vitest": "10.5.7",
