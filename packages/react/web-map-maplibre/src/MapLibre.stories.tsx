@@ -38,9 +38,9 @@ const INLINE_POLYGON_DATA_URL = `data:application/json,${encodeURIComponent(
 )}`;
 
 // Without an explicit `backgroundUrl`, MapLibre falls back to a real OpenStreetMap raster
-// tile server for the wireframe background - and `map.isStyleLoaded()` (which the component's
-// `runWhenStyleLoaded` guard waits on) only resolves once every source's *currently visible
-// tiles* have loaded too, not just once the style spec itself is set. That made this story
+// tile server for the wireframe background - and `map.isStyleLoaded()` (which the play functions
+// below wait on) only resolves once every source's *currently visible tiles* have loaded too,
+// not just once the style spec itself is set. That made this story
 // flaky in sandboxed/restricted-network test runs, unrelated to the actual thing under test
 // (the `defaultStyle` merge). An empty, sourceless style removes that dependency entirely -
 // nothing to fetch, so `isStyleLoaded()` resolves immediately.
