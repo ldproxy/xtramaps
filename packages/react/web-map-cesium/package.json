@@ -34,8 +34,8 @@
   },
   "dependencies": {
     "@xtramaps/web-map-cesium": "1.2.0",
-    "@cesium/engine": "^26.2.0",
-    "@cesium/widgets": "^16.1.1"
+    "@cesium/engine": "^26.4.0",
+    "@cesium/widgets": "^16.3.0"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
