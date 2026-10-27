@@ -35,7 +35,7 @@
     "@xtramaps/legend-symbols-maplibre": "1.0.1"
   },
   "peerDependencies": {
-    "svelte": "^5.0.0"
+    "svelte": "^5.57.3"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.0.0",
