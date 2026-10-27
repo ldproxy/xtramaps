@@ -34,6 +34,6 @@
   "dependencies": {
     "ol-mapbox-style": "^13.4.2",
     "proj4": "^2.21.0",
-    "ol": "10.8.0"
+    "ol": "10.11.0"
   }
 }

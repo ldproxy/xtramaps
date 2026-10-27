@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@xtramaps/web-map-openlayers": "1.2.1",
-    "ol": "10.8.0",
+    "ol": "10.11.0",
     "rlayers": "^3.9.0"
   },
   "peerDependencies": {
