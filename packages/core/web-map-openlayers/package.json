@@ -32,7 +32,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "ol-mapbox-style": "^13.4.2",
+    "ol-mapbox-style": "^13.8.0",
     "proj4": "^2.22.0",
     "ol": "10.8.0"
   }
