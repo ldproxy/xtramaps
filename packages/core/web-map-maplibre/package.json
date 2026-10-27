@@ -41,7 +41,7 @@
     "maplibre-gl": "^6.16.0"
   },
   "peerDependencies": {
-    "vite": ">=6.0.0"
+    "vite": ">=6.4.5"
   },
   "peerDependenciesMeta": {
     "vite": {
