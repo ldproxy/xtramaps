@@ -1,6 +1,6 @@
 {
   "name": "@xtramaps/web-map-openlayers-react",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "license": "MIT",
   "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/react/web-map-openlayers#readme",
   "repository": {
@@ -33,7 +33,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@xtramaps/web-map-openlayers": "1.2.1",
+    "@xtramaps/web-map-openlayers": "1.2.2",
     "ol": "10.8.0",
     "rlayers": "^3.9.0"
   },
