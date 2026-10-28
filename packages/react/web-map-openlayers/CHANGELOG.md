@@ -1,5 +1,13 @@
 # @xtramaps/web-map-openlayers-react
 
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies [88cd82e]
+- Updated dependencies [24535c6]
+  - @xtramaps/web-map-openlayers@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes

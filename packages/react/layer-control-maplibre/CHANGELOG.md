@@ -1,5 +1,11 @@
 # @xtramaps/layer-control-maplibre-react
 
+## 1.3.2
+
+### Patch Changes
+
+- 49d1083: fix(deps): update dependency maplibre-gl to ^6.16.0
+
 ## 1.3.1
 
 ### Patch Changes

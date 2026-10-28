@@ -1,6 +1,6 @@
 {
   "name": "@xtramaps/web-map-maplibre-react",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "license": "MIT",
   "homepage": "https://github.com/ldproxy/xtramaps/tree/main/packages/react/web-map-maplibre#readme",
   "repository": {
@@ -33,7 +33,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@xtramaps/web-map-maplibre": "1.2.1",
+    "@xtramaps/web-map-maplibre": "1.2.2",
     "@mapbox/mapbox-gl-draw": "^1.5.2",
     "@turf/combine": "^7.4.0",
     "maplibre-gl": "^6.16.0",
