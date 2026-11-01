@@ -1,5 +1,11 @@
 # @xtramaps/web-map-cesium
 
+## 1.2.2
+
+### Patch Changes
+
+- 161f32b: fix(deps): update dependency vite to >=6.4.5
+
 ## 1.2.1
 
 ### Patch Changes

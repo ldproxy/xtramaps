@@ -1,5 +1,14 @@
 # @xtramaps/web-map-maplibre-react
 
+## 1.2.2
+
+### Patch Changes
+
+- 49d1083: fix(deps): update dependency maplibre-gl to ^6.16.0
+- Updated dependencies [49d1083]
+- Updated dependencies [161f32b]
+  - @xtramaps/web-map-maplibre@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes

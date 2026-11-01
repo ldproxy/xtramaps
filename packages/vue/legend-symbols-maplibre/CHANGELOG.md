@@ -1,5 +1,11 @@
 # @xtramaps/legend-symbols-maplibre-vue
 
+## 1.0.2
+
+### Patch Changes
+
+- 6d4a911: fix(deps): update dependency vue to ^3.5.44
+
 ## 1.0.1
 
 ### Patch Changes
