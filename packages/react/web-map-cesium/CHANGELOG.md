@@ -1,5 +1,12 @@
 # @xtramaps/web-map-cesium-react
 
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies [161f32b]
+  - @xtramaps/web-map-cesium@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes

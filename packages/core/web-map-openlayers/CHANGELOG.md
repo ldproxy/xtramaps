@@ -1,5 +1,12 @@
 # @xtramaps/web-map-openlayers
 
+## 1.2.2
+
+### Patch Changes
+
+- 88cd82e: fix(deps): update dependency ol-mapbox-style to ^13.8.0
+- 24535c6: fix(deps): update dependency proj4 to ^2.22.0
+
 ## 1.2.1
 
 ### Patch Changes

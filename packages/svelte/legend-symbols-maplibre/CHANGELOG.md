@@ -1,5 +1,11 @@
 # @xtramaps/legend-symbols-maplibre-svelte
 
+## 1.0.2
+
+### Patch Changes
+
+- 102dae9: fix(deps): update dependency svelte to ^5.57.3
+
 ## 1.0.1
 
 ### Patch Changes
