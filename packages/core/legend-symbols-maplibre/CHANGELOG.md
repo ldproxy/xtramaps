@@ -1,5 +1,12 @@
 # @xtramaps/legend-symbols-maplibre
 
+## 1.0.2
+
+### Patch Changes
+
+- a06d4b9: fix(types): ship one bundled declaration file per entry again, so that types resolve with `moduleResolution: node16`/`nodenext`
+- f45765f: fix(deps): update dependency @maplibre/maplibre-gl-style-spec to v26.8.0
+
 ## 1.0.1
 
 ### Patch Changes

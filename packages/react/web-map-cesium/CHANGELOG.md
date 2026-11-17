@@ -1,5 +1,15 @@
 # @xtramaps/web-map-cesium-react
 
+## 1.2.2
+
+### Patch Changes
+
+- a06d4b9: fix(types): ship one bundled declaration file per entry again, so that types resolve with `moduleResolution: node16`/`nodenext`
+- Updated dependencies [a06d4b9]
+- Updated dependencies [161f32b]
+- Updated dependencies [a06d4b9]
+  - @xtramaps/web-map-cesium@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes

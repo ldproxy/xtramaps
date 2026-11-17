@@ -1,5 +1,20 @@
 # @xtramaps/web-map-maplibre-react
 
+## 1.2.2
+
+### Patch Changes
+
+- a06d4b9: fix(types): ship one bundled declaration file per entry again, so that types resolve with `moduleResolution: node16`/`nodenext`
+- 49d1083: fix(deps): update dependency maplibre-gl to ^6.16.0
+- a06d4b9: fix: declarations type-check in consumer projects with `skipLibCheck: false`, and `@turf/bbox` is no longer bundled next to the installed copy
+- Updated dependencies [a06d4b9]
+- Updated dependencies [49d1083]
+- Updated dependencies [161f32b]
+- Updated dependencies [f45765f]
+- Updated dependencies [a06d4b9]
+- Updated dependencies [a06d4b9]
+  - @xtramaps/web-map-maplibre@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @xtramaps/legend-symbols-maplibre-svelte
 
+## 1.0.2
+
+### Patch Changes
+
+- a06d4b9: fix(types): ship one bundled declaration file per entry again, so that types resolve with `moduleResolution: node16`/`nodenext`
+- 102dae9: fix(deps): update dependency svelte to ^5.57.3
+- Updated dependencies [a06d4b9]
+- Updated dependencies [f45765f]
+  - @xtramaps/legend-symbols-maplibre@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

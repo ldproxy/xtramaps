@@ -1,5 +1,13 @@
 # @xtramaps/web-map-cesium
 
+## 1.2.2
+
+### Patch Changes
+
+- a06d4b9: fix(types): ship one bundled declaration file per entry again, so that types resolve with `moduleResolution: node16`/`nodenext`
+- 161f32b: fix(deps): update dependency vite to >=6.4.5
+- a06d4b9: fix: export the CommonJS build of the `./vite` plugin entry to `require`
+
 ## 1.2.1
 
 ### Patch Changes
