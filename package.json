@@ -30,7 +30,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "pretest": "playwright install chromium",
-    "test": "vitest run"
+    "test": "vitest run",
+    "check:consumer": "node scripts/check-consumer-install.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.4",

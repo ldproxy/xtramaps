@@ -35,6 +35,7 @@ Each library has: `package.json`, `tsconfig.json`, `vite.config.ts`, `src/index.
 - `npm run test` — run all Storybook stories as automated tests (Vitest browser mode, real Chromium via Playwright)
 - `npm run storybook` — start the Storybook dev server (root-level, covers all packages)
 - `npm run build-storybook` — build a static Storybook
+- `npm run check:consumer` — pack the built packages, install them into a fresh project without a lockfile (as a consumer would), and fail if a map library or UI framework resolves to more than one version. Needs `npm run build` first
 
 ## Key Conventions
 
@@ -63,3 +64,4 @@ Each library has: `package.json`, `tsconfig.json`, `vite.config.ts`, `src/index.
 2. `npm run build` succeeds
 3. `npm run typecheck` passes
 4. `npm run test` passes (if stories exist for the changed package)
+5. `npm run check:consumer` passes (if dependencies changed)
