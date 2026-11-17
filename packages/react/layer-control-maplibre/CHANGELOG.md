@@ -1,5 +1,16 @@
 # @xtramaps/layer-control-maplibre-react
 
+## 1.3.2
+
+### Patch Changes
+
+- a06d4b9: fix(types): ship one bundled declaration file per entry again, so that types resolve with `moduleResolution: node16`/`nodenext`
+- 49d1083: fix(deps): update dependency maplibre-gl to ^6.16.0
+- Updated dependencies [a06d4b9]
+- Updated dependencies [f45765f]
+  - @xtramaps/layer-control-maplibre@1.3.2
+  - @xtramaps/legend-symbols-maplibre-react@1.0.2
+
 ## 1.3.1
 
 ### Patch Changes

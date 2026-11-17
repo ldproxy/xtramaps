@@ -1,5 +1,16 @@
 # @xtramaps/web-map-maplibre
 
+## 1.2.2
+
+### Patch Changes
+
+- a06d4b9: fix(types): ship one bundled declaration file per entry again, so that types resolve with `moduleResolution: node16`/`nodenext`
+- 49d1083: fix(deps): update dependency maplibre-gl to ^6.16.0
+- 161f32b: fix(deps): update dependency vite to >=6.4.5
+- f45765f: fix(deps): update dependency @maplibre/maplibre-gl-style-spec to v26.8.0
+- a06d4b9: fix: declarations type-check in consumer projects with `skipLibCheck: false`, and `@turf/bbox` is no longer bundled next to the installed copy
+- a06d4b9: fix: export the CommonJS build of the `./vite` plugin entry to `require`
+
 ## 1.2.1
 
 ### Patch Changes

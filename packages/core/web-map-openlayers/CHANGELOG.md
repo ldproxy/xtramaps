@@ -1,5 +1,14 @@
 # @xtramaps/web-map-openlayers
 
+## 1.2.2
+
+### Patch Changes
+
+- a06d4b9: fix(types): ship one bundled declaration file per entry again, so that types resolve with `moduleResolution: node16`/`nodenext`
+- 88cd82e: fix(deps): update dependency ol-mapbox-style to ^13.8.0
+- 24535c6: fix(deps): update dependency proj4 to ^2.22.0
+- a06d4b9: fix: import OpenLayers modules with explicit `.js` extensions, so that the core package can be imported in Node ESM (e.g. during SSR)
+
 ## 1.2.1
 
 ### Patch Changes

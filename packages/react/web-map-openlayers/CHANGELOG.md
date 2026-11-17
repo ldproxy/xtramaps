@@ -1,5 +1,18 @@
 # @xtramaps/web-map-openlayers-react
 
+## 1.2.2
+
+### Patch Changes
+
+- a06d4b9: fix(types): ship one bundled declaration file per entry again, so that types resolve with `moduleResolution: node16`/`nodenext`
+- a06d4b9: fix: import OpenLayers modules with explicit `.js` extensions, so that the core package can be imported in Node ESM (e.g. during SSR)
+- 70f6dd7: fix(deps): pin rlayers to the release matching the ol version, so that consumers do not install a second OpenLayers instance
+- Updated dependencies [a06d4b9]
+- Updated dependencies [88cd82e]
+- Updated dependencies [24535c6]
+- Updated dependencies [a06d4b9]
+  - @xtramaps/web-map-openlayers@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes
