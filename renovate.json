@@ -25,7 +25,7 @@
       "semanticCommitType": "fix"
     },
     {
-      "description": "rlayers pins its ol peer exactly, and Renovate doesn't read peer dependencies. Updating both together means the PR stays red (npm refuses the install) while ol is ahead of rlayers, and turns green once an rlayers release catches up.",
+      "description": "rlayers pins its ol peer exactly, and Renovate doesn't read peer dependencies. rlayers is pinned exactly as well, otherwise consumers resolve a newer rlayers whose ol peer differs from the bundled ol and npm installs a second OpenLayers instance. Updating both together means the PR stays red (npm refuses the install) while ol is ahead of rlayers, and turns green once an rlayers release catches up.",
       "groupName": "openlayers",
       "matchPackageNames": ["ol", "rlayers"]
     },
