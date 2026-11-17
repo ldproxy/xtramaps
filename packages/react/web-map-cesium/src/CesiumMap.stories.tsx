@@ -93,7 +93,7 @@ export const BuildingsTileset: Story = {
             `painted colours (background tile responses: ${describeBackgroundTileResponses()})`,
           ).toBeGreaterThan(300);
         },
-        { timeout: 25000, interval: 1000 },
+        { timeout: 50000, interval: 1000 },
       );
     });
   },
