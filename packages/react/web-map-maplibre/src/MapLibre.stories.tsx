@@ -4,6 +4,7 @@ import MapLibre, { CanvasOverlay } from "@xtramaps/web-map-maplibre-react";
 import "@xtramaps/web-map-maplibre-react/dist/index.css";
 import type { Map as MaplibreMap } from "maplibre-gl";
 import { expect, waitFor, within } from "storybook/test";
+import { measureNextRenderedFrame } from "./renderedPixels";
 
 const STYLE_URL = "https://demo.ldproxy.net/daraa/styles/topographic?f=mbs";
 
@@ -120,6 +121,19 @@ export const GeoJsonDataWithDefaultStyleMerge: Story = {
         await expect(capturedMap?.getLayer("polygons")?.maxzoom).toBe(24);
       },
     );
+
+    await step("the polygon is actually painted", async () => {
+      const map = capturedMap;
+      if (!map) throw new Error("map was not captured");
+      await waitFor(
+        async () => {
+          const stats = await measureNextRenderedFrame(map);
+          // The empty basemap paints a single colour; the polygon adds its fill.
+          await expect(stats.distinctColours).toBeGreaterThan(1);
+        },
+        { timeout: 15000, interval: 1000 },
+      );
+    });
   },
 };
 
@@ -165,6 +179,22 @@ export const StyleUrlRendersVectorTilesWithPopup: Story = {
         );
       },
     );
+
+    await step("the tiles are actually painted", async () => {
+      const map = capturedMap;
+      if (!map) throw new Error("map was not captured");
+      await waitFor(
+        async () => {
+          const stats = await measureNextRenderedFrame(map);
+          // queryRenderedFeatures above reads MapLibre's own feature index, which is
+          // filled even if nothing reaches the screen. A painted map shows hundreds of
+          // colours on most of its pixels; a blank one shows one.
+          await expect(stats.distinctColours).toBeGreaterThan(100);
+          await expect(stats.nonDominantShare).toBeGreaterThan(0.2);
+        },
+        { timeout: 15000, interval: 1000 },
+      );
+    });
   },
 };
 

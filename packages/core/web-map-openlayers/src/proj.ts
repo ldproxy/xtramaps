@@ -1,5 +1,5 @@
-import { get } from "ol/proj";
-import { register } from "ol/proj/proj4";
+import { register } from "ol/proj/proj4.js";
+import { get } from "ol/proj.js";
 import proj4 from "proj4";
 
 export const setupProjections = (): void => {

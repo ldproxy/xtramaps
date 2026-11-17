@@ -1,0 +1,59 @@
+export interface RenderedPixelStats {
+  distinctColours: number;
+  /** Share of pixels whose colour differs from the single most common one. */
+  nonDominantShare: number;
+}
+
+// Quantising to 4 bits per channel keeps anti-aliasing noise from inflating the
+// colour count of an otherwise empty map.
+function quantisedColourKey(pixels: Uint8ClampedArray, offset: number) {
+  return (
+    ((pixels[offset] >> 4) << 8) |
+    ((pixels[offset + 1] >> 4) << 4) |
+    (pixels[offset + 2] >> 4)
+  );
+}
+
+function measurePixels(canvas: HTMLCanvasElement): RenderedPixelStats {
+  const copy = new OffscreenCanvas(canvas.width, canvas.height);
+  const context = copy.getContext("2d");
+  if (!context) throw new Error("2D canvas context unavailable");
+  context.drawImage(canvas, 0, 0);
+  const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
+  const pixelCountByColour = new Map<number, number>();
+  for (let offset = 0; offset < pixels.length; offset += 4) {
+    const key = quantisedColourKey(pixels, offset);
+    pixelCountByColour.set(key, (pixelCountByColour.get(key) ?? 0) + 1);
+  }
+  const pixelCount = pixels.length / 4;
+  const dominantPixelCount = Math.max(...pixelCountByColour.values());
+
+  return {
+    distinctColours: pixelCountByColour.size,
+    nonDominantShare: (pixelCount - dominantPixelCount) / pixelCount,
+  };
+}
+
+/**
+ * Measures the next frame Cesium paints. The WebGL drawing buffer is only readable
+ * inside the frame that rendered it (no `preserveDrawingBuffer`). Cesium renders from
+ * a continuous `requestAnimationFrame` loop that re-registers itself each frame, so a
+ * callback registered from inside one frame runs in the next frame right after
+ * Cesium's own render, while the buffer still holds it.
+ */
+export function measureNextRenderedFrame(
+  canvas: HTMLCanvasElement,
+): Promise<RenderedPixelStats> {
+  return new Promise((resolve, reject) => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        try {
+          resolve(measurePixels(canvas));
+        } catch (error) {
+          reject(error);
+        }
+      });
+    });
+  });
+}

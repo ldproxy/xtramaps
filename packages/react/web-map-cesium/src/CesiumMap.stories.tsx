@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, waitFor } from "storybook/test";
 import CesiumMap from "./CesiumMap";
+import { measureNextRenderedFrame } from "./renderedPixels";
 
 // Cesium needs its Workers/Assets/ThirdParty static files served separately and
 // `window.CESIUM_BASE_URL` set before any Viewer is created - consuming apps are
@@ -57,6 +58,20 @@ export const BuildingsTileset: Story = {
       await waitFor(
         () => expect(canvasElement.querySelector("canvas")).not.toBeNull(),
         { timeout: 20000 },
+      );
+    });
+
+    await step("the background imagery is actually painted", async () => {
+      // Sky and atmosphere gradients alone paint 100-170 colours, so a low bar would
+      // pass without any imagery. With imagery the view settles at ~800 colours.
+      await waitFor(
+        async () => {
+          const canvas = canvasElement.querySelector("canvas");
+          if (!canvas) throw new Error("map canvas not rendered");
+          const stats = await measureNextRenderedFrame(canvas);
+          await expect(stats.distinctColours).toBeGreaterThan(300);
+        },
+        { timeout: 25000, interval: 1000 },
       );
     });
   },

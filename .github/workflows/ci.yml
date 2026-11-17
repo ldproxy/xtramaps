@@ -25,4 +25,5 @@ jobs:
       - run: npm run build
       - run: npm run typecheck
       - run: npm run check:consumer
+      - run: npm run check:consumer -- --react=18
       - run: npm run test

@@ -35,7 +35,7 @@ Each library has: `package.json`, `tsconfig.json`, `vite.config.ts`, `src/index.
 - `npm run test` — run all Storybook stories as automated tests (Vitest browser mode, real Chromium via Playwright)
 - `npm run storybook` — start the Storybook dev server (root-level, covers all packages)
 - `npm run build-storybook` — build a static Storybook
-- `npm run check:consumer` — pack the built packages, install them into a fresh project without a lockfile (as a consumer would), and fail if a map library or UI framework resolves to more than one version. Needs `npm run build` first
+- `npm run check:consumer` — pack the built packages and install them into a fresh project without a lockfile, as a consumer would. Checks package shape (publint, attw), a single instance of each map library and UI framework, peer ranges, strict consumer type-checking (`nodenext`, `skipLibCheck: false`), a Vite production build, and the `./vite` tooling entries in Node. `-- --react=18` checks the oldest supported React. Needs `npm run build` first; a failed run keeps the consumer project for inspection
 
 ## Key Conventions
 
@@ -44,6 +44,9 @@ Each library has: `package.json`, `tsconfig.json`, `vite.config.ts`, `src/index.
 - `tsconfig.json` extends `tsconfig.base.json` (must specify `outDir`, `rootDir`, `include` locally)
 - Shared devDeps (`typescript`, `vite`, `vite-plugin-dts`) live in root only — do not add to individual packages
 - Framework deps (react, vue, svelte) are externalized and declared as `peerDependencies`
+- Every runtime dependency must be externalized: the build fails if a JS module from outside `src` ends up in `dist` (stylesheets excepted). Add the package to `external` in the package's `vite.config.ts`
+- Types that appear in a package's public declarations need their `@types/*` package in `dependencies`, not `devDependencies`
+- Import OpenLayers modules with the `.js` extension (`ol/View.js`); `ol` has no `exports` map, so Node ESM cannot resolve `ol/View`
 - Core deps are listed in `dependencies` (not peers)
 - Map libraries (maplibre-gl, ol, cesium, their React bindings) are `dependencies`, not peers: xtramaps brings the map with it, so consumers get map library updates only through xtramaps releases
 - Biome handles formatting and linting — no Prettier or ESLint
@@ -64,4 +67,4 @@ Each library has: `package.json`, `tsconfig.json`, `vite.config.ts`, `src/index.
 2. `npm run build` succeeds
 3. `npm run typecheck` passes
 4. `npm run test` passes (if stories exist for the changed package)
-5. `npm run check:consumer` passes (if dependencies changed)
+5. `npm run check:consumer` passes (if dependencies, exports or build config changed)

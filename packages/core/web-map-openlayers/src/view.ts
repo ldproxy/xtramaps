@@ -1,6 +1,6 @@
-import type { Coordinate } from "ol/coordinate";
-import { boundingExtent, getCenter } from "ol/extent";
-import { fromLonLat } from "ol/proj";
+import type { Coordinate } from "ol/coordinate.js";
+import { boundingExtent, getCenter } from "ol/extent.js";
+import { fromLonLat } from "ol/proj.js";
 import type { OpenLayersStyle, TileMatrixSet } from "./types";
 
 export interface RView {

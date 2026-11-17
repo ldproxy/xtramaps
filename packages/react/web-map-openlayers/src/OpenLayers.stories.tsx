@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { createRef, useEffect, useState } from "react";
 import { expect, waitFor } from "storybook/test";
 import OpenLayers, { type OpenLayersRef } from "./OpenLayers";
+import { screenshotPixelStats } from "./renderedPixels";
 
 const STYLE_URL = "https://demo.ldproxy.net/daraa/styles/topographic?f=mbs";
 const VECTOR_TILES_URL =
@@ -90,6 +91,24 @@ function OpenLayersDemo() {
   );
 }
 
+// A canvas element exists even when OpenLayers draws nothing into it (e.g. with two
+// OpenLayers instances loaded), so only the painted pixels prove the map rendered.
+// An empty map shows a dozen colours (zoom buttons, attribution) on ~0.2% of its
+// pixels; base map plus vector tiles show hundreds of colours on over half of them.
+async function expectMapContentRendered(canvasElement: HTMLElement) {
+  await waitFor(
+    async () => {
+      const viewport = canvasElement.querySelector(".ol-viewport");
+      if (!viewport) throw new Error("map viewport not rendered");
+      const stats = await screenshotPixelStats(viewport);
+      if (stats === null) return;
+      await expect(stats.distinctColours).toBeGreaterThan(100);
+      await expect(stats.nonDominantShare).toBeGreaterThan(0.2);
+    },
+    { timeout: 20000, interval: 1000 },
+  );
+}
+
 const meta = {
   title: "web-map-openlayers/OpenLayers",
   component: OpenLayersDemo,
@@ -113,6 +132,7 @@ export const VectorTilesWithStyle: Story = {
         await waitFor(() => expect(olRef.current).not.toBeNull(), {
           timeout: 15000,
         });
+        await expectMapContentRendered(canvasElement);
       },
     );
 
@@ -130,6 +150,7 @@ export const VectorTilesWithStyle: Story = {
             timeout: 15000,
           },
         );
+        await expectMapContentRendered(canvasElement);
       },
     );
   },
