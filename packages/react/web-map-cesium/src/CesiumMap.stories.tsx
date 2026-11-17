@@ -20,13 +20,24 @@ const BACKGROUND_URL =
   "https://sgx.geodatenzentrum.de/wmts_basemapde/tile/1.0.0/de_basemapde_web_raster_farbe/default/GLOBAL_WEBMERCATOR/{TileMatrix}/{TileRow}/{TileCol}.png";
 const ATTRIBUTION = "Geobasis NRW | &copy; basemap.de / BKG";
 
-// Tells a failed imagery check apart: tiles never arrived (network) vs. arrived but not painted.
-function countBackgroundTileRequests() {
+// Tells a failed imagery check apart: tiles never arrived, arrived with an error
+// status, or arrived fine but were not painted.
+function describeBackgroundTileResponses() {
   const backgroundHost = new URL(BACKGROUND_URL.split("{")[0]).host;
-  return performance
-    .getEntriesByType("resource")
-    .filter((entry) => new URL(entry.name).host === backgroundHost).length;
+  const countByStatus = new Map<number, number>();
+  for (const entry of performance.getEntriesByType(
+    "resource",
+  ) as PerformanceResourceTiming[]) {
+    if (new URL(entry.name).host !== backgroundHost) continue;
+    const status = entry.responseStatus;
+    countByStatus.set(status, (countByStatus.get(status) ?? 0) + 1);
+  }
+  const summary = [...countByStatus]
+    .map(([status, count]) => `${count}x HTTP ${status || "unknown"}`)
+    .join(", ");
+  return summary || "none";
 }
+
 // No `?f=json` here (unlike a typical ldproxy format-negotiation URL): Cesium's
 // `Resource` propagates the tileset URL's query parameters onto every derived
 // subresource request (subtrees, tile content) - harmless for e.g. an auth
@@ -79,7 +90,7 @@ export const BuildingsTileset: Story = {
           const stats = await measureNextRenderedFrame(canvas);
           await expect(
             stats.distinctColours,
-            `painted colours (background tiles fetched: ${countBackgroundTileRequests()})`,
+            `painted colours (background tile responses: ${describeBackgroundTileResponses()})`,
           ).toBeGreaterThan(300);
         },
         { timeout: 25000, interval: 1000 },
