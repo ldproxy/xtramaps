@@ -92,7 +92,8 @@ export function exprHandler({
         if (specItem.type === "array") {
           return input;
         }
-        expr = expression.createExpression(input).value as typeof expr;
+        expr = expression.createExpression(input, `${type}.${prop}`)
+          .value as typeof expr;
       } else {
         expr = styleFunction.createFunction(
           input,
