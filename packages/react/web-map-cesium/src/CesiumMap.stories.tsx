@@ -19,6 +19,14 @@ window.CESIUM_BASE_URL = "https://unpkg.com/cesium@1.144.0/Build/Cesium/";
 const BACKGROUND_URL =
   "https://sgx.geodatenzentrum.de/wmts_basemapde/tile/1.0.0/de_basemapde_web_raster_farbe/default/GLOBAL_WEBMERCATOR/{TileMatrix}/{TileRow}/{TileCol}.png";
 const ATTRIBUTION = "Geobasis NRW | &copy; basemap.de / BKG";
+
+// Tells a failed imagery check apart: tiles never arrived (network) vs. arrived but not painted.
+function countBackgroundTileRequests() {
+  const backgroundHost = new URL(BACKGROUND_URL.split("{")[0]).host;
+  return performance
+    .getEntriesByType("resource")
+    .filter((entry) => new URL(entry.name).host === backgroundHost).length;
+}
 // No `?f=json` here (unlike a typical ldproxy format-negotiation URL): Cesium's
 // `Resource` propagates the tileset URL's query parameters onto every derived
 // subresource request (subtrees, tile content) - harmless for e.g. an auth
@@ -69,7 +77,10 @@ export const BuildingsTileset: Story = {
           const canvas = canvasElement.querySelector("canvas");
           if (!canvas) throw new Error("map canvas not rendered");
           const stats = await measureNextRenderedFrame(canvas);
-          await expect(stats.distinctColours).toBeGreaterThan(300);
+          await expect(
+            stats.distinctColours,
+            `painted colours (background tiles fetched: ${countBackgroundTileRequests()})`,
+          ).toBeGreaterThan(300);
         },
         { timeout: 25000, interval: 1000 },
       );
