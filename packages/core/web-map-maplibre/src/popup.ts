@@ -125,10 +125,15 @@ const getDefaultPopupContent = ({
   return Promise.resolve(allFeaturesHtml);
 };
 
+// Inline import() types: the declaration bundler drops this file's imports from
+// a global block, which leaves named type references unresolved for consumers.
 declare global {
   // eslint-disable-next-line no-var
   var getPopupContent:
-    | ((features: MapGeoJSONFeature[], map: MaplibreMap) => Promise<string>)
+    | ((
+        features: import("maplibre-gl").MapGeoJSONFeature[],
+        map: import("maplibre-gl").Map,
+      ) => Promise<string>)
     | undefined;
 }
 

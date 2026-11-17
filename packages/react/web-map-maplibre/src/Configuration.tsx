@@ -56,7 +56,7 @@ export interface ConfigurationProps {
   showCompass?: boolean;
 }
 
-function Configuration({
+function MapLibreConfiguration({
   styleUrl = null,
   removeZoomLevelConstraints = false,
   data,
@@ -177,6 +177,6 @@ function Configuration({
   return null;
 }
 
-Configuration.displayName = "MapLibreConfiguration";
+MapLibreConfiguration.displayName = "MapLibreConfiguration";
 
-export default Configuration;
+export default MapLibreConfiguration;

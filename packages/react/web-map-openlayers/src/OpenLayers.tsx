@@ -7,8 +7,8 @@ import {
   getRasterBackgroundAndAttributions,
   setupProjections,
 } from "@xtramaps/web-map-openlayers";
-import type { FeatureLike } from "ol/Feature";
-import { MVT } from "ol/format";
+import type { FeatureLike } from "ol/Feature.js";
+import { MVT } from "ol/format.js";
 import {
   forwardRef,
   useCallback,

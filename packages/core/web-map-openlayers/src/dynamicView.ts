@@ -1,6 +1,6 @@
 import type { Map as OlMap } from "ol";
-import { fromLonLat } from "ol/proj";
-import View from "ol/View";
+import { fromLonLat } from "ol/proj.js";
+import View from "ol/View.js";
 import type { TileMatrixSet } from "./types";
 
 export const setDynamicView = (

@@ -5,6 +5,7 @@ export default defineLibConfig({
   external: [
     "@maplibre/maplibre-gl-style-spec",
     "@mapbox/geojson-extent",
+    "@turf/bbox",
     "maplibre-gl",
     "vite",
     /^node:/,

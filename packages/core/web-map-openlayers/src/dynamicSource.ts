@@ -1,8 +1,8 @@
-import { MVT } from "ol/format";
-import type { Layer } from "ol/layer";
-import type VectorTileLayer from "ol/layer/VectorTile";
-import { VectorTile as VectorTileSource, XYZ as XYZSource } from "ol/source";
-import TileGrid from "ol/tilegrid/TileGrid";
+import { MVT } from "ol/format.js";
+import type VectorTileLayer from "ol/layer/VectorTile.js";
+import type { Layer } from "ol/layer.js";
+import { VectorTile as VectorTileSource, XYZ as XYZSource } from "ol/source.js";
+import TileGrid from "ol/tilegrid/TileGrid.js";
 import { stylefunction } from "ol-mapbox-style";
 import type { OpenLayersStyle, TileMatrixSet } from "./types";
 

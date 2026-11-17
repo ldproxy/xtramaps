@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, waitFor } from "storybook/test";
 import CesiumMap from "./CesiumMap";
+import { measureNextRenderedFrame } from "./renderedPixels";
 
 // Cesium needs its Workers/Assets/ThirdParty static files served separately and
 // `window.CESIUM_BASE_URL` set before any Viewer is created - consuming apps are
@@ -18,6 +19,25 @@ window.CESIUM_BASE_URL = "https://unpkg.com/cesium@1.144.0/Build/Cesium/";
 const BACKGROUND_URL =
   "https://sgx.geodatenzentrum.de/wmts_basemapde/tile/1.0.0/de_basemapde_web_raster_farbe/default/GLOBAL_WEBMERCATOR/{TileMatrix}/{TileRow}/{TileCol}.png";
 const ATTRIBUTION = "Geobasis NRW | &copy; basemap.de / BKG";
+
+// Tells a failed imagery check apart: tiles never arrived, arrived with an error
+// status, or arrived fine but were not painted.
+function describeBackgroundTileResponses() {
+  const backgroundHost = new URL(BACKGROUND_URL.split("{")[0]).host;
+  const countByStatus = new Map<number, number>();
+  for (const entry of performance.getEntriesByType(
+    "resource",
+  ) as PerformanceResourceTiming[]) {
+    if (new URL(entry.name).host !== backgroundHost) continue;
+    const status = entry.responseStatus;
+    countByStatus.set(status, (countByStatus.get(status) ?? 0) + 1);
+  }
+  const summary = [...countByStatus]
+    .map(([status, count]) => `${count}x HTTP ${status || "unknown"}`)
+    .join(", ");
+  return summary || "none";
+}
+
 // No `?f=json` here (unlike a typical ldproxy format-negotiation URL): Cesium's
 // `Resource` propagates the tileset URL's query parameters onto every derived
 // subresource request (subtrees, tile content) - harmless for e.g. an auth
@@ -57,6 +77,23 @@ export const BuildingsTileset: Story = {
       await waitFor(
         () => expect(canvasElement.querySelector("canvas")).not.toBeNull(),
         { timeout: 20000 },
+      );
+    });
+
+    await step("the background imagery is actually painted", async () => {
+      // Sky and atmosphere gradients alone paint 100-170 colours, so a low bar would
+      // pass without any imagery. With imagery the view settles at ~800 colours.
+      await waitFor(
+        async () => {
+          const canvas = canvasElement.querySelector("canvas");
+          if (!canvas) throw new Error("map canvas not rendered");
+          const stats = await measureNextRenderedFrame(canvas);
+          await expect(
+            stats.distinctColours,
+            `painted colours (background tile responses: ${describeBackgroundTileResponses()})`,
+          ).toBeGreaterThan(300);
+        },
+        { timeout: 50000, interval: 1000 },
       );
     });
   },
