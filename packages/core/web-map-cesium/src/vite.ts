@@ -3,7 +3,10 @@ import { createRequire } from "node:module";
 import { dirname, extname, join, relative } from "node:path";
 import type { Plugin } from "vite";
 
-const require = createRequire(import.meta.url);
+// The CommonJS build has no import.meta, so it resolves from its own file instead.
+const require = createRequire(
+  typeof __filename === "string" ? __filename : import.meta.url,
+);
 const packageDir = (name: string) =>
   dirname(require.resolve(`${name}/package.json`));
 

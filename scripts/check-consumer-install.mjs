@@ -253,15 +253,30 @@ function checkBrowserBundle(consumerDir) {
   return failure ? [failure] : [];
 }
 
+// A Vite config without "type": "module" is loaded as CommonJS and requires the plugins.
 function checkToolingImports(consumerDir, toolingEntrypoints) {
-  return toolingEntrypoints.flatMap((specifier) => {
-    const failure = runCollectingFailure(
-      "node",
-      ["--input-type=module", "--eval", `await import("${specifier}");`],
-      consumerDir,
-    );
-    return failure ? [`${specifier}: ${failure}`] : [];
-  });
+  const loaders = {
+    import: (specifier) => [
+      "--input-type=module",
+      "--eval",
+      `await import("${specifier}");`,
+    ],
+    require: (specifier) => [
+      "--input-type=commonjs",
+      "--eval",
+      `require("${specifier}");`,
+    ],
+  };
+  return toolingEntrypoints.flatMap((specifier) =>
+    Object.entries(loaders).flatMap(([loader, nodeArgs]) => {
+      const failure = runCollectingFailure(
+        "node",
+        nodeArgs(specifier),
+        consumerDir,
+      );
+      return failure ? [`${specifier} (${loader}): ${failure}`] : [];
+    }),
+  );
 }
 
 function report(title, problems) {
@@ -300,7 +315,7 @@ try {
     report("types (tsc, nodenext, skipLibCheck off)", checkTypes(consumerDir)),
     report("browser bundle (vite build)", checkBrowserBundle(consumerDir)),
     report(
-      "tooling imports in Node",
+      "tooling entries in Node (import, require)",
       checkToolingImports(consumerDir, entrypoints.tooling),
     ),
   ];
