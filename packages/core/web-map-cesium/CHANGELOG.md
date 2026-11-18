@@ -1,5 +1,11 @@
 # @xtramaps/web-map-cesium
 
+## 1.2.3
+
+### Patch Changes
+
+- 9978c82: Fix the CommonJS build of the `./vite` entry, which threw on load because `import.meta.url` is undefined there. It broke Vite configs that are loaded as CommonJS (no `"type": "module"`).
+
 ## 1.2.2
 
 ### Patch Changes
