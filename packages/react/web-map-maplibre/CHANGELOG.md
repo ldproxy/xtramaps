@@ -1,5 +1,12 @@
 # @xtramaps/web-map-maplibre-react
 
+## 1.2.3
+
+### Patch Changes
+
+- Updated dependencies [9978c82]
+  - @xtramaps/web-map-maplibre@1.2.3
+
 ## 1.2.2
 
 ### Patch Changes
