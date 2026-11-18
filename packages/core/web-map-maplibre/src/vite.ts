@@ -3,7 +3,10 @@ import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import type { Plugin } from "vite";
 
-const require = createRequire(import.meta.url);
+// The CommonJS build has no import.meta, so it resolves from its own file instead.
+const require = createRequire(
+  typeof __filename === "string" ? __filename : import.meta.url,
+);
 const distDir = join(
   dirname(require.resolve("maplibre-gl/package.json")),
   "dist",
